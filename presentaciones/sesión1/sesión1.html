@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Introducción a la Inteligencia Artificial - Sesión 1</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #020617;
+            --bg-card: #0f172a;
+            --accent-cyan: #22d3ee;
+            --accent-green: #22ee55;
+            --accent-orange: #f97316;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border: #1e293b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #020617;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            color: var(--text-primary);
+        }
+
+        /* Slide Core */
+        .slide-wrapper {
+            position: relative;
+            width: 90vw;
+            margin-bottom: 20px;
+        }
+
+        .slide-container {
+            width: 100%;
+            height: 80vh;
+            background-color: var(--bg-deep);
+            position: relative;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            padding: 60px;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--border);
+        }
+
+        .slide-container.active { display: flex; }
+
+        .slide-container::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: 
+                radial-gradient(circle at 0% 0%, rgba(34, 211, 238, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(249, 115, 22, 0.05) 0%, transparent 40%);
+            z-index: 0;
+        }
+
+        .slide-container > * { position: relative; z-index: 1; }
+
+        h1, h2, h3 { font-family: 'Outfit', sans-serif; font-weight: 700; }
+        
+        .slide-title {
+            font-size: 38px;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+            border-left: 5px solid var(--accent-cyan);
+            padding-left: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        p, li { font-size: 18px; line-height: 1.6; color: var(--text-secondary); }
+        strong { color: var(--accent-cyan); }
+
+        .content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; }
+
+        /* Title Slide */
+        .title-layout { text-align: center; justify-content: center; height: 100%; }
+        .title-layout h1 { font-size: 68px; color: var(--accent-cyan); margin-bottom: 15px; line-height: 1.1; }
+
+        /* Section Divider Layout */
+        .divider-layout { text-align: left; justify-content: center; height: 100%; }
+        .divider-layout .block-num { font-size: 24px; color: var(--accent-orange); letter-spacing: 4px; font-weight: 700; margin-bottom: 10px; }
+        .divider-layout h2 { font-size: 80px; line-height: 1; margin-bottom: 30px; color: var(--text-primary); }
+        .divider-layout hr { width: 100px; border: none; height: 4px; background: var(--accent-cyan); margin-bottom: 30px; }
+        .divider-layout .topics { font-size: 22px; color: var(--text-secondary); max-width: 600px; }
+
+        /* Visual Index */
+        .index-list { list-style: none; counter-reset: index-counter; }
+        .index-list li { 
+            margin-bottom: 15px; 
+            padding: 20px; 
+            background: var(--bg-card); 
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            cursor: default;
+        }
+        .index-list li::before { 
+            counter-increment: index-counter;
+            content: "0" counter(index-counter);
+            font-weight: 700;
+            color: var(--accent-orange);
+            margin-right: 25px;
+            font-family: 'Outfit';
+            font-size: 22px;
+            opacity: 0.8;
+        }
+
+        /* Layout Helpers */
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+        .image-wrapper { 
+            border-radius: 8px; 
+            overflow: hidden; 
+            border: 1px solid var(--border); 
+            background: var(--bg-card); 
+            height: 450px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            padding: 20px;
+        }
+
+        /* Paradigms Tiles */
+        .tiled-content { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 15px; 
+            width: 100%; 
+        }
+        .tile { 
+            background: var(--bg-card); 
+            border: 1px solid var(--border); 
+            padding: 30px 15px; 
+            border-radius: 12px; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        .tile:hover { transform: translateY(-5px); border-color: var(--accent-cyan); }
+        .tile i { font-size: 36px; color: var(--accent-cyan); margin-bottom: 20px; }
+        .tile h3 { font-size: 20px; color: var(--accent-orange); margin-bottom: 15px; }
+        .tile p { font-size: 14px; line-height: 1.4; }
+
+        
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-family: 'Outfit';
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .nav-btn:hover { border-color: var(--accent-cyan); color: var(--accent-cyan); }
+
+        .taxonomy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+        }
+
+        .taxonomy-col {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            border-top: 4px solid var(--accent-cyan);
+        }
+
+        .taxonomy-col.orange { border-top-color: var(--accent-orange); }
+        .taxonomy-col.green { border-top-color: var(--accent-green); }
+        .taxonomy-col.purple { border-top-color: var(--accent-purple); }
+        .taxonomy-col.red { border-top-color: var(--accent-red); }
+
+        .header-box { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+        .header-box i { font-size: 20px; color: var(--accent-cyan); }
+        .taxonomy-col.orange i { color: var(--accent-orange); }
+        .taxonomy-col.green i { color: var(--accent-green); }
+        .taxonomy-col.purple i { color: var(--accent-purple); }
+        .taxonomy-col.red i { color: var(--accent-red); }
+        
+        .header-box { display: flex; align-items: center; gap: 12px; margin-bottom: 5px; }
+        .header-box i { font-size: 24px; color: var(--accent-cyan); }
+        
+        .header-box h3 { font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
+        .math-formula {
+        background: #020617;
+        padding: 10px;
+        border-radius: 6px;
+        font-family: monospace;
+        font-size: 14px;
+        color: var(--accent-cyan);
+        border: 1px dashed var(--border);
+        text-align: center;
+        }
+        .dictionary-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .dict-item {
+            background: var(--bg-card);
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-cyan);
+            transition: transform 0.2s;
+        }
+
+        .dict-item:hover { transform: scale(1.02); }
+
+        .dict-item.orange { border-left-color: var(--accent-orange); }
+
+        .dict-item b { color: var(--accent-cyan); font-family: 'Outfit'; font-size: 17px; display: block; margin-bottom: 4px; }
+        .dict-item.orange b { color: var(--accent-orange); }
+        
+        .dict-item span { font-size: 13.5px; color: var(--text-secondary); line-height: 1.4; }
+        .dict-item .notacion { margin-top: 8px; font-family: monospace; color: var(--accent-green); font-size: 12px; }
+
+        .gigo-alert {
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid var(--accent-orange);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        .gigo-alert b { color: var(--accent-orange); font-size: 18px; }
+        
+        .data-type-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .data-card {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+        .data-card h3 { color: var(--accent-cyan); font-size: 18px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; }
+        .data-card ul { padding-left: 18px; }
+        .data-card li { font-size: 14px; margin-bottom: 5px; }
+
+        .viz-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            gap: 20px;
+            height: 100%;
+        }
+
+        .viz-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 15px 20px;
+            display: grid;
+            grid-template-columns: 1fr 160px;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .viz-card h3 { font-size: 18px; color: var(--accent-cyan); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+        .viz-card h3 i { font-size: 16px; color: var(--accent-orange); }
+
+        .viz-image-placeholder {
+            background: #020617;
+            height: 120px;
+            border-radius: 8px;
+            border: 1px dashed var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .viz-image-placeholder i { font-size: 40px; color: var(--border); }
+        .viz-image-placeholder img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+
+        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; width: 100%; }
+        .tiled-text-box { background: var(--bg-card); padding: 30px; border-radius: 12px; border: 1px solid var(--border); border-left: 4px solid var(--accent-cyan); }
+
+        /* ANALOGY BOX */
+        .analogy-box { background: rgba(34, 211, 238, 0.05); border: 1px solid var(--border); padding: 20px; border-radius: 12px; display: flex; gap: 20px; align-items: flex-start; }
+        .analogy-box i { font-size: 40px; color: var(--accent-orange); }
+        .home-btn {
+        background: rgba(34, 211, 238, 0.1);
+        border: 1px solid var(--border);
+        color: var(--text-dim);
+        padding: 10px 15px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .home-btn {
+        background: rgba(34, 211, 238, 0.1);
+        border: 1px solid var(--border);
+        color: var(--text-dim);
+        padding: 10px 15px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .home-btn:hover {
+        background: var(--accent);
+        color: var(--bg);
+        border-color: var(--accent);
+    }
+    
+    /* Ajuste para que los controles no se amontonen */
+    .controls {
+        position: fixed;
+        bottom: 30px;
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        background: rgba(15, 23, 42, 0.8);
+        padding: 10px 25px;
+        border-radius: 50px;
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--border);
+        z-index: 1000;
+    }
+    
+    /* Ajuste para que los controles no se amontonen */
+    </style>
+</head>
+<body>
+
+    <div class="slide-wrapper">
+        <!-- Slide 0: Portada -->
+        <div class="slide-container active" id="slide0">
+            <div class="content-area title-layout">
+                <h1>Machine Learning</h1>
+                <p class="subtitle">Por Raúl Gómez Téllez</p>
+                <div style="margin-top: 50px; height: 2px; width: 100px; background: var(--accent-orange); margin-left: auto; margin-right: auto;"></div>
+                <p style="margin-top: 20px; color: var(--accent-cyan); font-weight: 600;">JAÉN TECH 2026</p>
+            </div>
+        </div>
+
+        <!-- Slide 1: Índice Visual -->
+        <div class="slide-container" id="slide1">
+            <h2 class="slide-title">Contenido</h2>
+            <div class="content-area">
+                <ul class="index-list">
+                    <li><span><strong>Fundamentos:</strong> Evolución de la IA, jerarquías de aprendizaje y taxonomía.</span></li>
+                    <li><span><strong>Preprocesamiento:</strong> Métodos de limpieza, detección de ruido y escalado de datos.</span></li>
+                    <li><span><strong>Arquitectura:</strong> Representación, evaluación y optimización de modelos.</span></li>
+                    <li><span><strong>Algoritmos:</strong> Regresión, SVM, Modelos Bayesianos.</span></li>
+                    <li><span><strong>Métricas:</strong> Evaluación de rendimiento, matrices de confusión y precisión.</span></li>
+                </ul>
+                <p style="margin-top: 30px; font-style: italic; font-size: 14px; text-align: center; color: var(--accent-cyan);">
+                    <i class="fa-solid fa-circle-info"></i> Navega usando los controles inferiores para explorar el manual.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2: SEPARADOR 1 (Fundamentos) -->
+        <div class="slide-container" id="slide2">
+            <div class="content-area divider-layout">
+                <div class="block-num">BLOQUE 01</div>
+                <h2>Fundamentos de la IA</h2>
+                <hr>
+                <p class="topics">Definiciones esenciales, jerarquías de abstracción y el cambio de paradigma hacia el aprendizaje automático.</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Conceptos Clave (IA, ML, DL) -->
+        <div class="slide-container" id="slide3">
+            <h2 class="slide-title">IA vs ML vs DL</h2>
+            <div class="content-area">
+                <div class="two-column">
+                    <div>
+                        <ul style="list-style: none;">
+                            <li style="margin-bottom: 25px;">
+                                <strong>IA (Inteligencia Artificial):</strong> Capacidad de una máquina para imitar el comportamiento humano inteligente a través de algoritmos.
+                            </li>
+                            <li style="margin-bottom: 25px;">
+                                <strong>ML (Machine Learning):</strong> Un subconjunto de la IA que permite a los sistemas aprender y mejorar automáticamente a partir de la experiencia.
+                            </li>
+                            <li>
+                                <strong>DL (Deep Learning):</strong> Una evolución del ML basada en redes neuronales profundas que imitan la estructura del cerebro humano.
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="image-wrapper">
+                        <!-- Diagrama de Venn SVG -->
+                        <svg width="100%" height="100%" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Círculo IA -->
+                            <circle cx="200" cy="200" r="180" fill="var(--accent-cyan)" stroke="var(--accent-cyan)" stroke-width="2" opacity="0.15" />
+                            <text x="200" y="55" text-anchor="middle" fill="var(--accent-cyan)" font-family="Outfit" font-weight="700" font-size="24">IA</text>
+                            
+                            <!-- Círculo ML -->
+                            <circle cx="200" cy="230" r="120" fill="var(--accent-orange)" stroke="var(--accent-orange)" stroke-width="2" opacity="0.2" />
+                            <text x="200" y="145" text-anchor="middle" fill="var(--accent-orange)" font-family="Outfit" font-weight="700" font-size="22">ML</text>
+                            
+                            <!-- Círculo DL -->
+                            <circle cx="200" cy="265" r="65" fill="var(--accent-green)" stroke="var(--accent-green)" stroke-width="2" opacity="0.3" />
+                            <text x="200" y="275" text-anchor="middle" fill="var(--accent-green)" font-family="Outfit" font-weight="700" font-size="20">DL</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Paradigmas de Aprendizaje -->
+        <div class="slide-container" id="slide4">
+            <h2 class="slide-title">Paradigmas de Aprendizaje</h2>
+            <div class="content-area">
+                <div class="tiled-content">
+                    <div class="tile">
+                        <i class="fa-solid fa-tags"></i>
+                        <h3>Supervisado</h3>
+                        <p>Aprendizaje basado en datos etiquetados. El sistema conoce la respuesta correcta de antemano.</p>
+                    </div>
+                    <div class="tile">
+                        <i class="fa-solid fa-brain"></i>
+                        <h3>No Supervisado</h3>
+                        <p>Detección de patrones en datos sin etiquetas. El sistema agrupa información por similitudes.</p>
+                    </div>
+                    <div class="tile">
+                        <i class="fa-solid fa-circle-half-stroke"></i>
+                        <h3>Semi-supervisado</h3>
+                        <p>Híbrido que utiliza una pequeña cantidad de datos etiquetados con un volumen masivo sin etiquetar.</p>
+                    </div>
+                    <div class="tile">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <h3>Por Refuerzo</h3>
+                        <p>Aprendizaje mediante interacción, maximizando recompensas a través de prueba y error.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="slide-container" id="slide5">
+            <h2 class="slide-title">Las tareas</h2>
+            <div class="content-area">
+                <div class="taxonomy-grid">
+                    
+                    <!-- PREDICCIÓN -->
+                    <div class="taxonomy-col">
+                        <div class="header-box">
+                            <i class="fa-solid fa-bullseye"></i>
+                            <h3>Predicción (Supervisado)</h3>
+                        </div>
+                        <div class="math-formula">f(X) ≈ y</div>
+                        <div class="sub-task">
+                            <h4>Regresión</h4>
+                            <p>Salida <strong>continua</strong> (y ∈ ℝ). Importa la distancia del error. Ej: Precio vivienda.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Clasificación</h4>
+                            <p>Salida <strong>discreta</strong>. Vector de probabilidades. Ej: Fraude vs No Fraude.</p>
+                        </div>
+                    </div>
+
+                    <!-- DESCUBRIMIENTO -->
+                    <div class="taxonomy-col orange">
+                        <div class="header-box">
+                            <i class="fa-solid fa-magnifying-glass-chart"></i>
+                            <h3>Descubrimiento <br> (No Supervisado)</h3>
+                        </div>
+                        <div class="math-formula">Estructura de X</div>
+                        <div class="sub-task">
+                            <h4>Clustering</h4>
+                            <p>Agrupamiento por distancias geométricas. Ej: Segmentación de mercado.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Reducción Dimensional</h4>
+                            <p>Compresión de columnas (100D → 2D) sin perder información. Visualización.</p>
+                        </div>
+                    </div>
+
+                    <!-- GENERACIÓN -->
+                    <div class="taxonomy-col green">
+                        <div class="header-box">
+                            <i class="fa-solid fa-wand-sparkles"></i>
+                            <h3>Generación (GenAI)</h3>
+                        </div>
+                        <div class="math-formula">P(Data) → New Instance</div>
+                        <div class="sub-task">
+                            <h4>Frontera Moderna</h4>
+                            <p>No clasifica lo existente; aprende la <strong>Distribución de Probabilidad</strong>.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Muestreo</h4>
+                            <p>Crea instancias nunca vistas combinando rasgos aprendidos. Ej: Rostros IA.</p>
+                        </div>
+                    </div>
+
+                </div>
+                <p style="margin-top: 20px; font-style: italic; text-align: center; font-size: 14px; color: var(--accent-orange);">
+                    "¿Qué forma tiene la salida (y) que espero?" - La pregunta clave del Data Scientist.
+                </p>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide6">
+            <h2 class="slide-title">El Diccionario del Data Scientist</h2>
+            <div class="content-area">
+                <div class="dictionary-grid">
+                    <!-- Datos -->
+                    <div class="dict-item">
+                        <b>Carácterísticas/Features (X)</b>
+                        <span>Variables independientes. Numéricas o Categóricas (requieren Encoding).</span>
+                        <div class="notacion">Matriz X (Filas × Columnas)</div>
+                    </div>
+
+                    <div class="dict-item orange">
+                        <b>Parámetros</b>
+                        <span>Valóres que debe aprender nuestro modelo, en estos se refleja el conocimiento adquirido</span>
+                    </div>
+
+                    <div class="dict-item">
+                        <b>Variable objetivo/Target (y)</b>
+                        <span>Variable dependiente. Lo que queremos predecir.</span>
+                        <div class="notacion">Vector y (Una sola columna)</div>
+                    </div>
+
+                    <div class="dict-item orange">
+                        <b>Hiperparámetros</b>
+                        <span>Ajustes propios del modelo, se configuran antes de la ejecución del modelo</span>
+                    </div>
+
+                    <div class="dict-item">
+                        <b>Instancia (Sample)</b> 
+                        <span>Conjunto de datos(Características) que define una observación</span>
+                    </li>
+                    </div>
+
+                    <div class="dict-item orange">
+                        <b>Bias (Sesgo)</b>
+                        <span>Error por simplificar demasiado un problema complejo.</span>
+                        <div class="notacion">Alto Bias → Underfitting</div>
+                    </div>
+
+                    <div class="dict-item">
+                        <b>Dataset</b>
+                        <span>Conjunto de instancias para entrenar nuestro modelo</span>
+                    </li>
+                    </div>
+
+                    <div class="dict-item orange">
+                        <b>Variance (Varianza)</b>
+                        <span>Sensibilidad a fluctuaciones del entrenamiento. Memoriza ruido.</span>
+                        <div class="notacion">Alta Varianza → Overfitting</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEPARADOR 2 (Preprocesamiento) -->
+        <div class="slide-container" id="slide7">
+            <div class="content-area divider-layout">
+                <div class="block-num">BLOQUE 02</div>
+                <h2>Preprocesamiento</h2>
+                <hr>
+                <p class="topics">La importancia de los datos: limpieza, gestión de outliers, normalización y preparación para el modelado.</p>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide8">
+            <h2 class="slide-title">Ley GIGO y tipos de datos</h2>
+            <div class="content-area">
+                <div class="gigo-alert">
+                    <b>Garbage In, Garbage Out (GIGO)</b>
+                    <p style="margin-top:10px; color:var(--text-primary);">Si alimentas al modelo con datos ruidosos o sesgados, el modelo aprenderá ruido y sesgo con absoluta confianza matemática. El algoritmo es simplemente un espejo.</p>
+                    <p style="margin-top:15px; font-family:'Outfit'; font-weight:700; color:var(--accent-cyan); font-size:20px;">
+                        Datos Excelentes + Modelo Simple ≫ Datos Mediocres + Modelo Complejo
+                    </p>
+                </div>
+
+                <div class="data-type-box">
+                    <div class="data-card">
+                        <h3><i class="fa-solid fa-table"></i> Datos Tabulares</h3>
+                        <p style="font-size:13px; margin-bottom:10px;">Estructurados en filas y columnas (SQL, Excel, CSV).</p>
+                        <ul>
+                            <li>Dominio del <b>ML Clásico</b>.</li>
+                            <li>Features claras (Edad, Salario).</li>
+                            <li>Fácil interpretación matemática.</li>
+                        </ul>
+                    </div>
+                    <div class="data-card">
+                        <h3><i class="fa-solid fa-file-audio"></i> No Estructurados</h3>
+                        <p style="font-size:13px; margin-bottom:10px;">Sin formato de tabla predefinido. Imágenes, Audio, Texto libre.</p>
+                        <ul>
+                            <li>Requieren <b>Deep Learning</b>.</li>
+                            <li>Alta dimensionalidad (píxeles).</li>
+                            <li>Necesitan extracción de patrones compleja.</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <p style="margin-top:20px; font-size:13px; border-top: 1px solid var(--border); padding-top:10px; color:var(--accent-orange);">
+                    <i class="fa-solid fa-triangle-exclamation"></i> <b>Cuidado con el Sesgo:</b> El modelo no es machista ni prejuicioso; los datos históricos lo son.
+                </p>
+            </div>
+        </div>
+        
+        <div class="slide-container" id="slide9">
+            <h2 class="slide-title">Visualización y Análisis Exploratorio (EDA)</h2>
+            <div class="content-area">
+                <div class="viz-grid">
+                    
+                    <!-- Histograma -->
+                    <div class="viz-card">
+                        <div>
+                            <h3><i class="fa-solid fa-chart-column"></i> Histograma & KDE</h3>
+                            <p style="font-size: 14px;"><strong>Análisis Univariante:</strong> Permite ver la forma de la distribución (Gaussiana) y detectar sesgos (Skewness).</p>
+                        </div>
+                        <div class="viz-image-placeholder">
+                            <img src="./assets/images/histogram.svg" alt="bigotes">
+                        </div>
+                    </div>
+
+                    <!-- Scatter Plot -->
+                    <div class="viz-card">
+                        <div>
+                            <h3><i class="fa-solid fa-braille"></i> Scatter Plot</h3>
+                            <p style="font-size: 14px;"><strong>Análisis Bivariante:</strong> Detecta visualmente si la relación entre variables es lineal o si existen clusters definidos.</p>
+                        </div>
+                        <div class="viz-image-placeholder">
+                            <img src="./assets/images/scatter.png" alt="bigotes">
+                        </div>
+                    </div>
+
+                    <!-- Box Plot -->
+                    <div class="viz-card">
+                        <div>
+                            <h3><i class="fa-solid fa-box-open"></i> Box Plot (Caja/Bigotes)</h3>
+                            <p style="font-size: 14px;">El detector de mentiras. Resume la distribución y visualiza <strong>Outliers</strong> matemáticos.</p>
+                            <div class="math-formula">IQR: [Q1 - 1.5·IQR, Q3 + 1.5·IQR]</div>
+                        </div>
+                        <div class="viz-image-placeholder">
+                            <img src="./assets/images/cajas_bigotes3.png" alt="bigotes">
+                        </div>
+                    </div>
+
+                    <!-- Matriz de Correlación -->
+                    <div class="viz-card">
+                        <div>
+                            <h3><i class="fa-solid fa-table-cells"></i> Heatmap (Correlación)</h3>
+                            <p style="font-size: 14px;">Mide fuerza de relación (-1 a +1). Pearson (Lineal) y Spearman (Monótona). ¡Cuidado con Multicolinealidad!</p>
+                        </div>
+                        <div class="viz-image-placeholder">
+                            <img src="./assets/images/heatmap.png" alt="bigotes">
+                        </div>
+                    </div>
+            </div>
+
+
+        <p style="margin-top: 15px; font-style: italic; text-align: center; font-size: 14px; color: var(--text-secondary);">
+            "No te fíes de los números: el Cuarteto de Anscombe demuestra que hay que pintar los datos."
+        </p>
+    </div>
+        </div>
+
+        <!-- Slide 10: ESTADÍSTICA Y ESCALAMIENTO -->
+        <div class="slide-container" id="slide10">
+            <h2 class="slide-title">Estadística y Escalamiento</h2>
+            <div class="content-area">
+                <div class="taxonomy-grid">
+                    <div class="taxonomy-col">
+                        <div class="header-box"><i class="fa-solid fa-chart-area"></i><h3>Dispersión</h3></div>
+                        <div class="math-formula">σ² = Σ(xi - μ)² / N</div>
+                        <div class="sub-task">
+                            <h4>Varianza (σ²)</h4>
+                            <p>Mide qué tan lejos están los datos de la media. Es el promedio de distancias al cuadrado.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Desviación Típica (σ)</h4>
+                            <p>Recupera las unidades originales. Es la raíz cuadrada de la varianza σ².</p>
+                        </div>
+                    </div>
+                    <div class="taxonomy-col orange">
+                        <div class="header-box"><i class="fa-solid fa-ruler-combined"></i><h3>El Conflicto</h3></div>
+                        <div class="math-formula">Hab (1-5) ≪ Precio (10⁶)</div>
+                        <div class="sub-task">
+                            <h4>Dominio Matemático</h4>
+                            <p>En KNN o SVM, los nú  #presentation-scaler {
+            width: 1200px;  /* Ancho base de diseño */
+            height: 675px; /* Proporción 16:9 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+            transfor
+                        </div>
+                        <div class="sub-task">
+                            <h4>Impacto Gradiente</h4>
+                            <p>Sin escalar, la convergencia es lenta y errática debido a la deformación del espacio de coste.</p>
+                        </div>
+                    </div>
+                    <div class="taxonomy-col green">
+                        <div class="header-box"><i class="fa-solid fa-check-double"></i><h3>Estandarización</h3></div>
+                        <div class="math-formula">z = (x - μ) / σ</div>
+                        <div class="sub-task">
+                            <h4>Standard Scaler</h4>
+                            <p>Forzamos <strong>Media = 0</strong> y <strong>Desviación = 1</strong> en todas las columnas.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Z-Score</h4>
+                            <p>Pone a todas las features en la misma regla de medir, típicamente entre -3 y +3.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: TRATAMIENTO DE DATOS -->
+        <div class="slide-container" id="slide11">
+            <h2 class="slide-title">Tratamiento de Datos: Encoding e Imputación</h2>
+            <div class="content-area">
+                <div class="taxonomy-grid">
+                    <div class="taxonomy-col">
+                        <div class="header-box"><i class="fa-solid fa-language"></i><h3>Variables Categóricas</h3></div>
+                        <div class="math-formula">Rojo → [1, 0, 0]</div>
+                        <div class="sub-task">
+                            <h4>One-Hot Encoding</h4>
+                            <p>Crea una columna por categoría. Ideal si no hay orden jerárquico.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Label Encoding</h4>
+                            <p>Asigna un número (0, 1, 2). ¡Cuidado! El modelo puede interpretar jerarquías falsas.</p>
+                        </div>
+                    </div>
+                    <div class="taxonomy-col orange">
+                        <div class="header-box"><i class="fa-solid fa-eraser"></i><h3>Valores Faltantes</h3></div>
+                        <div class="math-formula">Impute(X) = Mean | Median</div>
+                        <div class="sub-task">
+                            <h4>Imputación</h4>
+                            <p>Rellenar con la <strong>Media</strong> o <strong>Moda</strong> para no perder instancias.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Estrategias</h4>
+                            <p>Eliminación de filas o uso de algoritmos avanzados para predecir el hueco.</p>
+                        </div>
+                    </div>
+                    <div class="taxonomy-col green">
+                        <div class="header-box"><i class="fa-solid fa-filter"></i><h3>Selección de Features</h3></div>
+                        <div class="math-formula">X_new ⊂ X_orig</div>
+                        <div class="sub-task">
+                            <h4>Varianza Cero</h4>
+                            <p>Si una columna tiene siempre el mismo valor, no aporta nada. <strong>¡Bórrala!</strong></p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Relevancia</h4>
+                            <p>Prioriza columnas con relación matemática real con el objetivo (target).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide12">
+            <h2 class="slide-title">Maldición de Dimensionalidad y PCA</h2>
+            <div class="content-area">
+                <div class="taxonomy-grid">
+                    <div class="taxonomy-col red">
+                        <div class="header-box"><i class="fa-solid fa-skull-crossbones"></i><h3>La Maldición</h3></div>
+                        <div class="math-formula">Space ∝ Exp(Dims)</div>
+                        <div class="sub-task">
+                            <h4>Espacio Disperso</h4>
+                            <p>A más dimensiones, los datos se alejan. La distancia euclidiana deja de tener sentido.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Consecuencia</h4>
+                            <p>Necesitas un volumen de datos exponencial para entrenar correctamente.</p>
+                        </div>
+                    </div>
+                    <div class="taxonomy-col">
+                        <div class="header-box"><i class="fa-solid fa-camera"></i><h3>PCA (No Supervisado)</h3></div>
+                        <div class="math-formula">Max(Variance)</div>
+                        <div class="sub-task">
+                            <h4>Estrategia</h4>
+                            <p>Simplifica proyectando en menos dimensiones preservando la estructura global.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Analogía</h4>
+                            <p>Como un fotógrafo buscando el ángulo donde el grupo de personas se vea mejor (máxima dispersión).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: LDA (NUEVA) -->
+        <div class="slide-container" id="slide13">
+            <h2 class="slide-title">LDA: Reducción Supervisada</h2>
+            <div class="content-area">
+                <div class="taxonomy-grid">
+                    <div class="taxonomy-col purple">
+                        <div class="header-box"><i class="fa-solid fa-compress-arrows-alt"></i><h3>LDA (Supervisado)</h3></div>
+                        <div class="math-formula">Max(Separability)</div>
+                        <div class="sub-task">
+                            <h4>Estrategia</h4>
+                            <p>Utiliza las etiquetas (y) para encontrar el eje que mejor separa las clases.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Diferencia con PCA</h4>
+                            <p>A LDA le importa qué hace diferentes a las clases, no la forma global de la nube.</p>
+                        </div>
+                    </div>
+                    <div class="taxonomy-col green">
+                        <div class="header-box"><i class="fa-solid fa-bullseye"></i><h3>Criterio de Éxito</h3></div>
+                        <div class="math-formula">Between / Within</div>
+                        <div class="sub-task">
+                            <h4>Entre-Clases</h4>
+                            <p>Maximizar la distancia entre los centros de los diferentes grupos.</p>
+                        </div>
+                        <div class="sub-task">
+                            <h4>Intra-Clase</h4>
+                            <p>Minimizar la dispersión interna: que los puntos de una clase estén muy juntos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SEPARADOR 3 Arquitectura de un algoritmo -->
+        <div class="slide-container" id="slide14">
+            <div class="content-area divider-layout">
+                <div class="block-num">BLOQUE 03</div>
+                <h2>Arquitectura de un algoritmo</h2>
+                <hr>
+                <p class="topics">Desmontando la caja negra: Representación (El Cuerpo), Evaluación (El Juez) y Optimización (El Motor).</p>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide15">
+        <h2 class="slide-title">Anatomía de un Algoritmo de ML</h2>
+        <div class="content-area">
+            <div class="taxonomy-grid">
+                <!-- REPRESENTACIÓN -->
+                <div class="taxonomy-col">
+                    <div class="header-box"><i class="fa-solid fa-shapes"></i><h3>Representación</h3></div>
+                    <div class="math-formula">Espacio de Hipótesis</div>
+                    <div class="sub-task">
+                        <h4>El "Cuerpo"</h4>
+                        <p>¿Qué es capaz de aprender? Es el conjunto de funciones que el algoritmo puede utilizar.</p>
+                    </div>
+                    <div class="sub-task">
+                        <h4>Límite Físico</h4>
+                        <p>Si eliges una línear recta, el modelo jamás entenderá un círculo. Ej: Árboles, Grafos, Hiperplanos.</p>
+                    </div>
+                </div>
+                <!-- EVALUACIÓN -->
+                <div class="taxonomy-col orange">
+                    <div class="header-box"><i class="fa-solid fa-gavel"></i><h3>Evaluación</h3></div>
+                    <div class="math-formula">Función de Coste J(w)</div>
+                    <div class="sub-task">
+                        <h4>El "Juez"</h4>
+                        <p>¿Cómo distinguimos un modelo bueno de uno malo? Mide el error en un solo número (escalar).</p>
+                    </div>
+                    <div class="sub-task">
+                        <h4>Objetivo</h4>
+                        <p>Minimizar la discrepancia entre la predicción y la realidad. Ej: MSE, Log Loss.</p>
+                    </div>
+                </div>
+                <!-- OPTIMIZACIÓN -->
+                <div class="taxonomy-col green">
+                    <div class="header-box"><i class="fa-solid fa-engine"></i><h3>Optimización</h3></div>
+                    <div class="math-formula">Búsqueda de w*</div>
+                    <div class="sub-task">
+                        <h4>El "Motor"</h4>
+                        <p>¿Cómo buscamos la mejor configuración? Ajusta los pesos iterativamente para ganar al juez.</p>
+                    </div>
+                    <div class="sub-task">
+                        <h4>Método</h4>
+                        <p>Navega por el espacio de parámetros. Ej: Descenso del Gradiente, Programación Cuadrática.</p>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Slide 18: EL JUEZ: FUNCIONES DE COSTE -->
+        <div class="slide-container" id="slide16">
+            <h2 class="slide-title">El Juez: La Función de Coste (Loss)</h2>
+            <div class="content-area">
+                <div class="taxonomy-grid">
+                    <!-- MSE -->
+                    <div class="taxonomy-col">
+                        <div class="header-box"><h3>MSE (Mean Squared Error)</h3></div>
+                        <div class="math-formula">Σ(y - ŷ)² / N</div>
+                        <div class="sub-task">
+                            <h4>Castigo al Outlier</h4>
+                            <p>Al elevar al cuadrado, un error grande penaliza muchísimo más que uno pequeño. Induce a modelos conservadores.</p>
+                        </div>
+                    </div>
+                    <!-- MAE -->
+                    <div class="taxonomy-col orange">
+                        <div class="header-box"><h3>MAE (Mean Absolute Error)</h3></div>
+                        <div class="math-formula">Σ|y - ŷ| / N</div>
+                        <div class="sub-task">
+                            <h4>Robustez</h4>
+                            <p>No entra en pánico con valores atípicos. Trata todos los errores de forma lineal.</p>
+                        </div>
+                    </div>
+                    <!-- LOG LOSS -->
+                    <div class="taxonomy-col green">
+                        <div class="header-box"><h3>Log Loss (Cross-Entropy)</h3></div>
+                        <div class="math-formula">- Σ [y·log(ŷ) + (1-y)·log(1-ŷ)]</div>
+                        <div class="sub-task">
+                            <h4>Confianza Equivocada</h4>
+                            <p>Penaliza la "arrogancia". Si el modelo está muy seguro de algo falso, el coste tiende a <strong>infinito</strong>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 19: EL MOTOR: OPTIMIZADORES -->
+        <div class="slide-container" id="slide17">
+            <h2 class="slide-title">El Motor: Estrategias de Descenso</h2>
+            <div class="content-area">
+                <div class="taxonomy-grid">
+                    <!-- BATCH -->
+                    <div class="taxonomy-col">
+                        <div class="header-box"><h3>Batch Descent</h3></div>
+                        <div class="sub-task">
+                            <h4>El Prudente</h4>
+                            <p>Lee <strong>todo</strong> el dataset para dar un solo paso. Gradiente perfecto, pero lento e inviable en Big Data.</p>
+                        </div>
+                    </div>
+                    <!-- SGD -->
+                    <div class="taxonomy-col orange">
+                        <div class="header-box"><h3>Stochastic (SGD)</h3></div>
+                        <div class="sub-task">
+                            <h4>El Borracho</h4>
+                            <p>Toma un solo dato al azar y da un paso inmediato. Muy rápido pero ruidoso y errático.</p>
+                        </div>
+                    </div>
+                    <!-- MINI-BATCH -->
+                    <div class="taxonomy-col green">
+                        <div class="header-box"><h3>Mini-Batch</h3></div>
+                        <div class="sub-task">
+                            <h4>El Estándar</h4>
+                            <p>Usa lotes (32, 64, 128). Equilibra velocidad y estabilidad. Optimizado para el hardware (GPU).</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="math-formula" style="margin-top: 30px; font-size: 18px;">w_nuevo = w_viejo - α · ∇J(w)</div>
+            </div>
+        </div>
+
+        <!-- Slide 20: EVOLUCIÓN MODERNA: ADAM -->
+        <div class="slide-container" id="slide18">
+            <h2 class="slide-title">Evolución Moderna: Optimizador Adam</h2>
+            <div class="content-area">
+                <div class="two-column">
+                    <div class="tiled-text-box">
+                        <h3>Momentum (Inercia)</h3>
+                        <p style="font-size: 14px; color: var(--text-secondary);">Acumula velocidad de gradientes pasados. Permite saltar baches pequeños (mínimos locales) para encontrar el valle profundo real.</p>
+                    </div>
+                    <div class="tiled-text-box" style="border-left-color: var(--accent-green);">
+                        <h3>Adaptive Learning Rate</h3>
+                        <p style="font-size: 14px; color: var(--text-secondary);">Ajusta el paso (α) individualmente para cada peso. Si una variable es rara, le da pasos de gigante; si es inestable, la frena.</p>
+                    </div>
+                </div>
+                <p style="margin-top: 40px; text-align: center; color: var(--accent-cyan); font-weight: 700;">
+                    Adam es el "estándar de oro" por ser robusto y converger mucho más rápido sin ajustes manuales constantes.
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 21: REGULARIZACIÓN: CONTROL DE COMPLEJIDAD -->
+        <div class="slide-container" id="slide19">
+            <h2 class="slide-title">Regularización: El Freno al Overfitting</h2>
+            <div class="content-area">
+                <div class="math-formula" style="margin-bottom: 30px;">Coste_total = Error(MSE) + λ · Penalty(w)</div>
+                <div class="two-column">
+                    <div class="taxonomy-col">
+                        <div class="header-box"><h3>L1 (Lasso)</h3></div>
+                        <p style="font-size: 14px;">Fuerza los pesos inútiles a ser <strong>exactamente cero</strong>. Realiza selección automática de variables.</p>
+                    </div>
+                    <div class="taxonomy-col orange">
+                        <div class="header-box"><h3>L2 (Ridge)</h3></div>
+                        <p style="font-size: 14px;">Fuerza los pesos a ser pequeños pero no cero. Evita que una sola variable domine toda la predicción.</p>
+                    </div>
+                </div>
+                <div class="analogy-box" style="margin-top: 30px;">
+                    <i class="fa-solid fa-hand-holding-dollar"></i>
+                    <p style="font-size: 14px;">"Tu trabajo es minimizar el error, pero te voy a multar por cada peso alto que uses". El modelo busca la solución más simple que explique bien los datos.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide20">
+            <div class="content-area divider-layout">
+                <div class="block-num">BLOQUE 04</div>
+                <h2>Modelos Clásicos</h2>
+                <hr>
+                <p class="topics">Explorando la "caja de herramientas" esencial: Regresiones, SVM y Modelos Bayesianos.</p>
+            </div>
+        </div>
+        
+        <div class="slide-container" id="slide21">
+        <h2 class="slide-title">Regresión Lineal: El Hiperplano</h2>
+        <div class="content-area">
+            <div class="taxonomy-grid">
+                <div class="taxonomy-col">
+                    <div class="header-box"><i class="fa-solid fa-chart-line"></i><h3>Representación</h3></div>
+                    <div class="math-formula">ŷ = wᵀx + b</div>
+                    <div class="sub-task">
+                        <h4>Aproximación Lineal</h4>
+                        <p>Predice un valor continuo (escalar) como suma ponderada de las entradas.</p>
+                    </div>
+                </div>
+                <div class="taxonomy-col orange">
+                    <div class="header-box"><i class="fa-solid fa-gavel"></i><h3>Evaluación</h3></div>
+                    <div class="math-formula">Min Σ(y - ŷ)²</div>
+                    <div class="sub-task">
+                        <h4>MSE (Mínimos Cuadrados)</h4>
+                        <p>El "Juez" penaliza cuadráticamente los residuos para encontrar la línea de mejor ajuste.</p>
+                    </div>
+                </div>
+                <div class="taxonomy-col green">
+                    <div class="header-box"><i class="fa-solid fa-sliders"></i><h3>Analogía</h3></div>
+                    <div class="sub-task">
+                        <h4>Mesa de Mezclas</h4>
+                        <p>El entrenamiento ajusta los <strong>faders (pesos w)</strong> de cada canal (feature) para minimizar la distorsión final.</p>
+                    </div>
+                </div>
+                </div>
+                <div class="analogy-box">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <p style="font-size: 14px;"><strong>Profundidad:</strong> Al ser una función cuadrática y convexa, garantizamos encontrar siempre el mínimo global mediante Descenso del Gradiente.</p>
+                </div>
+            </div>
+        </div>
+
+    <!-- Slide 2: Regresión Logística -->
+    <div class="slide-container" id="slide22">
+        <h2 class="slide-title">Regresión Logística: Probabilidades</h2>
+        <div class="content-area">
+            <div class="taxonomy-grid">
+                <div class="taxonomy-col">
+                    <div class="header-box"><i class="fa-solid fa-wave-square"></i><h3>Función Sigmoide</h3></div>
+                    <div class="math-formula">σ(z) = 1 / (1 + e⁻ᶻ)</div>
+                    <div class="sub-task">
+                        <h4>Aplastamiento</h4>
+                        <p>Mapea cualquier número de (-∞, +∞) al rango [0, 1]. Transforma rectas en probabilidades.</p>
+                    </div>
+                </div>
+                <div class="taxonomy-col orange">
+                    <div class="header-box"><i class="fa-solid fa-bullseye"></i><h3>Clasificación</h3></div>
+                    <div class="math-formula">P(y=1|x) > 0.5</div>
+                    <div class="sub-task">
+                        <h4>Frontera de Decisión</h4>
+                        <p>Define un hiperplano que separa dos clases. A pesar del nombre, es un algoritmo de <strong>clasificación</strong>.</p>
+                    </div>
+                </div>
+                <div class="taxonomy-col green">
+                    <div class="header-box"><i class="fa-solid fa-lock"></i><h3>Evaluación</h3></div>
+                    <div class="math-formula">Log Loss</div>
+                    <div class="sub-task">
+                        <h4>Entropía Cruzada</h4>
+                        <p>Penaliza logarítmicamente la confianza errónea ("arrogancia" del modelo).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: SVM (Support Vector Machines) -->
+    <div class="slide-container" id="slide23">
+        <h2 class="slide-title">SVM: Geometría de Margen Máximo</h2>
+        <div class="content-area">
+            <div class="taxonomy-grid">
+                <div class="taxonomy-col">
+                    <div class="header-box"><i class="fa-solid fa-arrows-left-right"></i><h3>La Calle más Ancha</h3></div>
+                    <div class="math-formula">Max (2 / ||w||)</div>
+                    <div class="sub-task">
+                        <h4>Margen Máximo</h4>
+                        <p>Busca separar las clases con la mayor distancia posible, minimizando el riesgo de error.</p>
+                    </div>
+                </div>
+                <div class="taxonomy-col orange">
+                    <div class="header-box"><i class="fa-solid fa-wand-magic-sparkles"></i><h3>Kernel Trick</h3></div>
+                    <div class="math-formula">Φ(x)ᵀΦ(x')</div>
+                    <div class="sub-task">
+                        <h4>No Linealidad</h4>
+                        <p>Proyecta datos a dimensiones superiores para separar nubes que en 2D parecen imposibles.</p>
+                    </div>
+                </div>
+                <div class="taxonomy-col purple">
+                    <div class="header-box"><i class="fa-solid fa-vector-square"></i><h3>Vectores Soporte</h3></div>
+                    <div class="sub-task">
+                        <h4>Puntos Críticos</h4>
+                        <p>El modelo solo depende de los puntos más cercanos a la frontera. Son los pilares del hiperplano.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Naive Bayes -->
+    <div class="slide-container" id="slide24">
+        <h2 class="slide-title">Naive Bayes: Causalidad Inversa</h2>
+        <div class="content-area">
+            <div class="taxonomy-grid">
+                <div class="taxonomy-col">
+                    <div class="header-box"><i class="fa-solid fa-calculator"></i><h3>Teorema de Bayes</h3></div>
+                    <div class="math-formula">P(C|x) ∝ P(x|C)P(C)</div>
+                    <div class="sub-task">
+                        <h4>Probabilidad Posterior</h4>
+                        <p>Calcula la probabilidad de una clase basándose en las evidencias (features) observadas.</p>
+                    </div>
+                </div>
+                <div class="taxonomy-col orange">
+                    <div class="header-box"><i class="fa-solid fa-user-ninja"></i><h3>El supuesto "Naive"</h3></div>
+                    <div class="sub-task">
+                        <h4>Independencia</h4>
+                        <p>Asume que los rasgos no tienen relación entre sí (ej: el color no depende de la forma). ¡Es falso, pero funciona!</p>
+                    </div>
+                </div>
+                <div class="taxonomy-col green">
+                    <div class="header-box"><i class="fa-solid fa-envelope-open-text"></i><h3>Dominio NLP</h3></div>
+                    <div class="sub-task">
+                        <h4>Texto y Spam</h4>
+                        <p>Líder indiscutible en velocidad y clasificación de texto gracias a su simplicidad matemática.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Resumen de Modelos Clásicos -->
+    <div class="slide-container" id="slide25">
+        <h2 class="slide-title">Caja de Herramientas: ¿Cuál elegir?</h2>
+        <div class="content-area">
+            <div class="taxonomy-grid" style="grid-template-columns: 1fr 1fr;">
+                <div class="taxonomy-col" style="border-top-color: var(--accent-cyan);">
+                    <div class="header-box"><h3>Simplicidad Lineal</h3></div>
+                    <p style="font-size: 14px;"><strong>L. Reg / Log. Reg:</strong> Rápidos, interpretables y base de toda la estadística moderna. Úsalos como primer <em>baseline</em>.</p>
+                </div>
+                <div class="taxonomy-col" style="border-top-color: var(--accent-purple);">
+                    <div class="header-box"><h3>Potencia Geométrica</h3></div>
+                    <p style="font-size: 14px;"><strong>SVM:</strong> Ideal para datasets pequeños pero complejos donde la frontera de decisión no es una recta.</p>
+                </div>
+                <div class="taxonomy-col" style="border-top-color: var(--accent-green);">
+                    <div class="header-box"><h3>Velocidad Probabilística</h3></div>
+                    <p style="font-size: 14px;"><strong>Naive Bayes:</strong> Tu mejor opción para filtrado de texto en tiempo real y Big Data ligero.</p>
+                </div>
+                <div class="taxonomy-col" style="border-top-color: var(--accent-orange);">
+                    <div class="header-box"><h3>Regla de Oro</h3></div>
+                    <p style="font-size: 14px;">"La complejidad del modelo debe ser proporcional a la cantidad de datos". Evita usar un Ferrari (Deep Learning) para ir a la esquina (100 filas).</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-container" id="slide26">
+    <div class="content-area divider-layout">
+        <div class="block-num">BLOQUE 05</div>
+        <h2>Entrenamiento y Evaluación</h2>
+        <hr>
+        <p class="topics">¿Cómo sabemos si el modelo funciona? Validación Hold-out, Cross-Validation, Matrices de Confusión y el equilibrio del F1-Score.</p>
+    </div>
+    </div>
+
+    <div class="slide-container" id="slide27">
+    <h2 class="slide-title">El Equilibrio: Bias vs Variance</h2>
+    <div class="content-area">
+        <div class="taxonomy-grid" style="grid-template-columns: 1fr 1fr;">
+            <!-- UNDERFITTING -->
+            <div class="taxonomy-col orange">
+                <div class="header-box"><i class="fa-solid fa-battery-quarter"></i><h3>Underfitting (Perezoso)</h3></div>
+                <div class="math-formula">Alto Bias (Sesgo)</div>
+                <div class="sub-task">
+                    <h4>Síntoma</h4>
+                    <p>Mucho error tanto en Entrenamiento como en Test. El modelo es demasiado simple.</p>
+                </div>
+                <div class="sub-task">
+                    <h4>Analogía</h4>
+                    <p>Estudiante que solo lee la contraportada del libro. No aprueba ni los ejercicios de clase.</p>
+                </div>
+            </div>
+            <!-- OVERFITTING -->
+            <div class="taxonomy-col red">
+                <div class="header-box"><i class="fa-solid fa-brain"></i><h3>Overfitting (Memoria)</h3></div>
+                <div class="math-formula">Alta Varianza</div>
+                <div class="sub-task">
+                    <h4>Síntoma</h4>
+                    <p>Acierto del 99% en Entrenamiento, pero 50% en Test. El modelo memoriza el ruido.</p>
+                </div>
+                <div class="sub-task">
+                    <h4>Analogía</h4>
+                    <p>Estudiante que memoriza las respuestas exactas (A, B, C...) de exámenes viejos sin entender.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <!-- Slide 8: PROTOCOLO DE DIVISIÓN DE DATOS -->
+    <div class="slide-container" id="slide28">
+        <h2 class="slide-title">Protocolo de División: Las 3 Fases</h2>
+        <div class="content-area">
+            <div class="taxonomy-grid">
+                <div class="taxonomy-col">
+                    <div class="header-box"><h3>Training (70%)</h3></div>
+                    <div class="sub-task">
+                        <h4>El Libro de Texto</h4>
+                        <p>Datos para que el algoritmo aprenda los patrones y ajuste sus pesos (w).</p>
+                    </div>
+                </div>
+                <div class="taxonomy-col orange">
+                    <div class="header-box"><h3>Validation (15%)</h3></div>
+                    <div class="sub-task">
+                        <h4>Simulacro de Examen</h4>
+                        <p>Se usa para ajustar los Hiperparámetros (k, C, Learning Rate) sin "quemar" el test.</p>
+                    </div>
+                </div>
+                <div class="taxonomy-col green">
+                    <div class="header-box"><h3>Test (15%)</h3></div>
+                    <div class="sub-task">
+                        <h4>Examen Oficial</h4>
+                        <p>Se usa UNA SOLA VEZ al final. Es la nota definitiva para el cliente.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="analogy-box">
+                <i class="fa-solid fa-shuffle"></i>
+                <p style="font-size: 14px;"><strong>Random State:</strong> Antes de dividir, baraja. Fijar una semilla (ej. 42) asegura que tus experimentos sean reproducibles.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: CROSS-VALIDATION -->
+    <div class="slide-container" id="slide29">
+        <h2 class="slide-title">K-Fold Cross-Validation: El Estándar</h2>
+        <div class="content-area">
+            <div class="taxonomy-grid" style="grid-template-columns: 1.5fr 1fr;">
+                <div class="taxonomy-col">
+                    <div class="header-box"><i class="fa-solid fa-rotate"></i><h3>Estrategia de Rotación</h3></div>
+                    <p style="font-size: 14px;">Dividimos el dataset en K partes. Entrenamos K veces, rotando cuál parte sirve de validación.</p>
+                    <div class="math-formula">Promedio(Error₁, Error₂, ..., Errorₖ)</div>
+                </div>
+                <div class="taxonomy-col purple">
+                    <div class="header-box"><h3>¿Cuándo usar cada una?</h3></div>
+                    <ul style="font-size: 13px; list-style: none;">
+                        <li><strong>Hold-out:</strong> Muchos datos (>10k).</li>
+                        <li><strong>K-Fold:</strong> Datos medios (<10k).</li>
+                        <li><strong>LOOCV:</strong> Datos minúsculos (<100).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: MATRIZ DE CONFUSIÓN -->
+    <div class="slide-container" id="slide30">
+        <h2 class="slide-title">Métricas: La Matriz de Confusión</h2>
+        <div class="content-area">
+            <div class="taxonomy-grid">
+                <div class="taxonomy-col green">
+                    <div class="header-box"><h3>True Positive (TP)</h3></div>
+                    <p style="font-size: 14px;">Acierto: Predije Cáncer y TIENE Cáncer.</p>
+                </div>
+                <div class="taxonomy-col green" style="opacity: 0.8;">
+                    <div class="header-box"><h3>True Negative (TN)</h3></div>
+                    <p style="font-size: 14px;">Acierto: Predije Sano y ESTÁ Sano.</p>
+                </div>
+                <div class="taxonomy-col orange">
+                    <div class="header-box"><h3>False Positive (FP)</h3></div>
+                    <p style="font-size: 14px;">Falsa Alarma: Predije Cáncer pero está sano.</p>
+                </div>
+                <div class="taxonomy-col red">
+                    <div class="header-box"><h3>False Negative (FN)</h3></div>
+                    <p style="font-size: 14px;">Peligro Mortal: Predije Sano pero tiene cáncer.</p>
+                </div>
+            </div>
+            <p style="margin-top: 25px; text-align: center; color: var(--accent-orange); font-size: 14px;">
+                <i class="fa-solid fa-triangle-exclamation"></i> <strong>La Trampa del Accuracy:</strong> En detección de terroristas (99.9% honestos), un modelo que diga "Nadie es terrorista" sacará un 99.9% de acierto pero será inútil.
+            </p>
+        </div>
+    </div>
+
+    <!-- Slide 11: PRECISION VS RECALL -->
+    <div class="slide-container" id="slide31">
+        <h2 class="slide-title">Precision vs Recall: El Dilema</h2>
+        <div class="content-area">
+            <div class="taxonomy-grid">
+                <div class="taxonomy-col">
+                    <div class="header-box"><h3>Precision (Pura)</h3></div>
+                    <div class="math-formula">TP / (TP + FP)</div>
+                    <p style="font-size: 13px;">¿De los que dije que eran positivos, cuántos lo eran de verdad?</p>
+                    <p style="font-size: 13px; color: var(--accent-cyan); margin-top: 5px;">Ideal para <strong>Filtros de Spam</strong>.</p>
+                </div>
+                <div class="taxonomy-col orange">
+                    <div class="header-box"><h3>Recall (Sensibilidad)</h3></div>
+                    <div class="math-formula">TP / (TP + FN)</div>
+                    <p style="font-size: 13px;">¿De todos los reales, cuántos fui capaz de encontrar?</p>
+                    <p style="font-size: 13px; color: var(--accent-orange); margin-top: 5px;">Ideal para <strong>Diagnóstico Médico</strong>.</p>
+                </div>
+                <div class="taxonomy-col green">
+                    <div class="header-box"><h3>F1-Score</h3></div>
+                    <div class="math-formula">2 · (P · R) / (P + R)</div>
+                    <p style="font-size: 13px;">Media armónica. Se usa para buscar un equilibrio cuando no tenemos preferencia clara.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- Navigation -->
+    <div class="controls">
+        <a href="../../index.html" class="home-btn" title="Volver al Menú"><i class="fa-solid fa-house"></i></a>
+        <button class="nav-btn" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
+        <span id="slide-info" style="font-weight: 600; font-family: 'Outfit';">1 / 32</span>
+        <button class="nav-btn" onclick="moveSlide(1)">Siguiente <i class="fa-solid fa-chevron-right"></i></button>
+    </div>
+
+    <script>
+        let currentSlideIndex = 0;
+        const slides = document.querySelectorAll('.slide-container');
+        const slideInfo = document.getElementById('slide-info');
+
+        function updateSlide() {
+            slides.forEach((s, i) => s.classList.toggle('active', i === currentSlideIndex));
+            slideInfo.innerText = `${currentSlideIndex + 1} / ${slides.length}`;
+        }
+
+        function moveSlide(n) {
+            currentSlideIndex = (currentSlideIndex + n + slides.length) % slides.length;
+            updateSlide();
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') moveSlide(1);
+            if (e.key === 'ArrowLeft') moveSlide(-1);
+        });
+    </script>
+</body>
+</html>
