@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación IA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg: #05070a;
+            --accent: #00f2ff;
+            --text: #ffffff;
+            --nav-bg: rgba(17, 24, 39, 0.9);
+        }
+
+        .home-btn {
+        background: rgba(34, 211, 238, 0.1);
+        border: 1px solid var(--border);
+        color: var(--text-dim);
+        padding: 10px 15px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .home-btn {
+        background: rgba(34, 211, 238, 0.1);
+        border: 1px solid var(--border);
+        color: var(--text-dim);
+        padding: 10px 15px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 14px;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .home-btn:hover {
+        background: var(--accent);
+        color: var(--bg);
+        border-color: var(--accent);
+    }
+    
+
+        img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+        body, html { 
+            margin: 0; padding: 0; height: 100%; 
+            background: var(--bg); color: var(--text);
+            font-family: 'Inter', sans-serif; overflow: hidden;
+        }
+
+        /* Título Persistente */
+        header {
+            position: fixed; top: 0; width: 100%; padding: 20px 50px;
+            background: linear-gradient(to bottom, var(--bg), transparent);
+            z-index: 100; font-size: 1.2rem; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 2px;
+            border-bottom: 1px solid rgba(0, 242, 255, 0.1);
+        }
+
+        #presentation { display: flex; align-items: center; justify-content: center; height: 100vh; }
+
+        .slide {
+            display: none; width: 100vw; height: 100vh;
+            padding: 120px 8% 100px 8%; box-sizing: border-box;
+            grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center;
+        }
+        .slide.active { display: grid; animation: fadeIn 0.5s ease; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* Controles de Navegación */
+        .controls {
+            position: fixed; bottom: 0; width: 100%; padding: 20px;
+            display: flex; justify-content: center; align-items: center;
+            background: var(--nav-bg); gap: 20px; z-index: 100;
+        }
+
+        .nav-btn {
+            background: transparent; border: 1px solid var(--accent);
+            color: var(--accent); padding: 8px 20px; cursor: pointer;
+            border-radius: 5px; font-weight: bold; transition: 0.3s;
+        }
+        .nav-btn:hover { background: var(--accent); color: var(--bg); }
+
+        #counter { font-family: monospace; font-size: 1.2rem; min-width: 60px; text-align: center; }
+
+        /* Clases de utilidad */
+        .info { display: flex; flex-direction: column; justify-content: center; }
+        .visual-side {
+            height: 60vh; background: rgba(255,255,255,0.02);
+            border-radius: 20px; border: 1px dashed var(--accent);
+            display: flex; align-items: center; justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+
+<div id="presentation">
+    <div class="slide active" id="s1">
+        <div class="info">
+            <h1 style="font-size: 5rem; color: var(--accent); margin:0;">DATOS<br>SINTÉTICOS</h1>
+            <p style="font-size: 2rem; opacity: 0.7;">El futuro de la IA Generativa</p>
+        </div>
+        <div class="visual-side"> <img src="assets/d1.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s2">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: var(--accent); margin-bottom: 1rem;">Índice</h2>
+        
+        <div style="display: grid; grid-template-columns: 1fr; gap: 10px; font-size: 1.3rem;">
+            <div style="padding: 10px; border-bottom: 1px solid rgba(0,242,255,0.2);">01. Conceptos Fundamentales</div>
+            <div style="padding: 10px; border-bottom: 1px solid rgba(0,242,255,0.2);">02. Métodos de Variación de Datos</div>
+            <div style="padding: 10px; border-bottom: 1px solid rgba(0,242,255,0.2);">03. Arquitecturas de Generación Sintética</div>
+            <div style="padding: 10px; border-bottom: 1px solid rgba(0,242,255,0.2);">04. Análisis de Casos Reales (Use Cases)</div>
+            <div style="padding: 10px; border-bottom: 1px solid rgba(0,242,255,0.2);">05. Herramientas y Visión de Futuro</div>
+        </div>
+    </div>
+    <div class="visual-side"> <img src="assets/d2.png" alt=""> </div>
+    </div>
+
+
+    <div class="slide" id="s3">
+        <div class="info">
+            <h2 style="font-size: 3rem; color: var(--accent);">¿Qué son los datos aumentados?</h2>
+            <p style="font-size: 1.5rem; margin-bottom: 2rem;">Obtención de datos desconocidos mediante procesos artificiales.</p>
+            <div style="display: grid; gap: 20px;">
+                <div style="border-left: 4px solid var(--accent); padding-left: 20px;">
+                    <h3>Variación</h3>
+                    <p>Mutación de datos reales (rotar, escalar, ruido).</p>
+                </div>
+                <div style="border-left: 4px solid #f87171; padding-left: 20px;">
+                    <h3>Generación</h3>
+                    <p>Creación basada en modelos.</p>
+                </div>
+            </div>
+        </div>
+        <div class="visual-side"> <img src="assets/d3.png" alt=""> </div>
+    </div>
+    
+    
+    <div class="slide" id="s4">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #22c55e; margin-bottom: 1rem;">¿Por qué aumentar?</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            El valor de no depender exclusivamente de la realidad.
+        </p>
+        
+        <div style="display: grid; grid-template-columns: 1fr; gap: 20px;">
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+                <div style="background: #22c55e; color: #000; padding: 10px; border-radius: 50%; font-weight: bold; min-width: 40px; text-align: center;">1</div>
+                <div>
+                    <h4 style="margin: 0; font-size: 1.5rem;">Soberanía del Dato</h4>
+                    <p style="margin: 5px 0 0 0; color: #9ca3af;">Elimina la dependencia de recolectar datos de terceros o usuarios reales.</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+                <div style="background: #22c55e; color: #000; padding: 10px; border-radius: 50%; font-weight: bold; min-width: 40px; text-align: center;">2</div>
+                <div>
+                    <h4 style="margin: 0; font-size: 1.5rem;">Coste de Etiquetado</h4>
+                    <p style="margin: 5px 0 0 0; color: #9ca3af;">El dato nace ya etiquetado. Ahorro masivo en tiempo y capital humano.</p>
+                </div>
+            </div>
+            <div style="display: flex; align-items: flex-start; gap: 20px;">
+                <div style="background: #22c55e; color: #000; padding: 10px; border-radius: 50%; font-weight: bold; min-width: 40px; text-align: center;">3</div>
+                <div>
+                    <h4 style="margin: 0; font-size: 1.5rem;">Privacidad Inviolable</h4>
+                    <p style="margin: 5px 0 0 0; color: #9ca3af;">No hay riesgo de filtración porque el sujeto original nunca existió.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="visual-side"> <img src="assets/d4.png" alt=""> </div>
+    </div>
+
+
+    <div class="slide" id="s5">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: var(--accent); margin-bottom: 1rem;">Técnicas de Variación</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Evolucionando el dato real para crear robustez.
+        </p>
+        
+        <ul style="font-size: 1.4rem; line-height: 1.8;">
+            <li><strong style="color: var(--accent);">Morfología:</strong> Rotar, estirar o voltear el dato original.</li>
+            <li><strong style="color: var(--accent);">Filtros:</strong> Añadir ruido aleatorio o desenfoque para simular errores.</li>
+            <li><strong style="color: var(--accent);">Cromatismo:</strong> Alterar brillo y contraste para evitar sesgos de luz.</li>
+        </ul>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d5.png" alt=""> </div>
+    </div>
+
+
+    <div class="slide" id="s6">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: var(--accent); margin-bottom: 1rem;">Variación I: Geometría</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Alteración de la estructura espacial para lograr invarianza.
+        </p>
+        
+        <div style="display: grid; gap: 20px;">
+            <div style="background: rgba(0, 242, 255, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(0, 242, 255, 0.2);">
+                <h4 style="margin: 0; color: var(--accent); font-size: 1.4rem;">📐 Rotación y Espejo</h4>
+                <p style="margin: 5px 0 0 0;">Enseña al modelo que un objeto es el mismo sin importar su orientación o sentido.</p>
+            </div>
+            <div style="background: rgba(0, 242, 255, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(0, 242, 255, 0.2);">
+                <h4 style="margin: 0; color: var(--accent); font-size: 1.4rem;">🔍 Zoom y Recorte (Crop)</h4>
+                <p style="margin: 5px 0 0 0;">Simula diferentes distancias y encuadres, obligando a la IA a detectar rasgos locales.</p>
+            </div>
+            <div style="background: rgba(0, 242, 255, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(0, 242, 255, 0.2);">
+                <h4 style="margin: 0; color: var(--accent); font-size: 1.4rem;">🖼️ Traslación</h4>
+                <p style="margin: 5px 0 0 0;">Mueve el objeto dentro del frame para que el modelo no se obsesione con el centro.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d6.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s7">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #fbbf24; margin-bottom: 1rem;">Variación II: Fotometría</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Independencia lumínica: El modelo aprende a ver más allá del color.
+        </p>
+        
+        <div style="display: grid; gap: 20px;">
+            <div style="background: rgba(251, 191, 36, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.2);">
+                <h4 style="margin: 0; color: #fbbf24; font-size: 1.4rem;">💡 Brillo y Contraste</h4>
+                <p style="margin: 5px 0 0 0;">Simula condiciones extremas de sobreexposición o falta de luz (noche/día).</p>
+            </div>
+            <div style="background: rgba(251, 191, 36, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.2);">
+                <h4 style="margin: 0; color: #fbbf24; font-size: 1.4rem;">🌈 Color Jittering</h4>
+                <p style="margin: 5px 0 0 0;">Modificación de Hue (tono) y Saturación para evitar sesgos cromáticos accidentales.</p>
+            </div>
+            <div style="background: rgba(251, 191, 36, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(251, 191, 36, 0.2);">
+                <h4 style="margin: 0; color: #fbbf24; font-size: 1.4rem;">🌑 Desaturación</h4>
+                <p style="margin: 5px 0 0 0;">El paso a escala de grises fuerza al modelo a reconocer texturas y formas puras.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d7.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s8">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #ef4444; margin-bottom: 1rem;">Variación III: Ruido</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Robustez técnica: Preparando al modelo para el mundo imperfecto.
+        </p>
+        
+        <div style="display: grid; gap: 20px;">
+            <div style="background: rgba(239, 68, 68, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);">
+                <h4 style="margin: 0; color: #ef4444; font-size: 1.4rem;">🧂 Sal y Pimienta</h4>
+                <p style="margin: 5px 0 0 0;">Simulación de errores de transmisión o píxeles muertos en el sensor.</p>
+            </div>
+            <div style="background: rgba(239, 68, 68, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);">
+                <h4 style="margin: 0; color: #ef4444; font-size: 1.4rem;">🌫️ Gaussian Blur</h4>
+                <p style="margin: 5px 0 0 0;">Suavizado de bordes para simular desenfoque por movimiento o falta de foco.</p>
+            </div>
+            <div style="background: rgba(239, 68, 68, 0.05); padding: 20px; border-radius: 12px; border: 1px solid rgba(239, 68, 68, 0.2);">
+                <h4 style="margin: 0; color: #ef4444; font-size: 1.4rem;">📉 Ruido Gaussiano</h4>
+                <p style="margin: 5px 0 0 0;">Inyección de grano digital para que la IA aprenda a extraer la señal útil del caos.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d8.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s9">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #f87171; margin-bottom: 1rem;">Generación Sintética</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Creación de datos nuevos basados en arquitecturas neuronales.
+        </p>
+        
+        <div style="display: flex; flex-direction: column; gap: 15px;">
+            <div style="background: rgba(248, 113, 113, 0.1); border: 1px solid #f87171; padding: 15px; border-radius: 10px;">
+                <strong style="color: #f87171; font-size: 1.4rem;">GANs:</strong> 
+                <span style="font-size: 1.2rem;">Duelo entre dos redes para lograr el máximo realismo.</span>
+            </div>
+            <div style="background: rgba(248, 113, 113, 0.1); border: 1px solid #f87171; padding: 15px; border-radius: 10px;">
+                <strong style="color: #f87171; font-size: 1.4rem;">VAEs:</strong> 
+                <span style="font-size: 1.2rem;">Modelado del espacio latente para reconstruir datos.</span>
+            </div>
+            <div style="background: rgba(248, 113, 113, 0.1); border: 1px solid #f87171; padding: 15px; border-radius: 10px;">
+                <strong style="color: #f87171; font-size: 1.4rem;">Difusión:</strong> 
+                <span style="font-size: 1.2rem;">Refinamiento progresivo de ruido aleatorio en datos útiles.</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d9.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s10">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #a855f7; margin-bottom: 1rem;">Generación I: GANs</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Redes Antagónicas: El arte de la falsificación perfecta.
+        </p>
+        
+        <div style="display: grid; gap: 15px;">
+            <div style="padding: 15px; border-radius: 10px; background: rgba(168, 85, 247, 0.05); border-left: 5px solid #a855f7;">
+                <h4 style="margin: 0; color: #a855f7;">🎨 El Generador</h4>
+                <p style="margin: 5px 0 0 0; font-size: 1.1rem;">Recibe ruido aleatorio y lo transforma en un dato plausible. Su meta es engañar al sistema.</p>
+            </div>
+            <div style="padding: 15px; border-radius: 10px; background: rgba(34, 197, 94, 0.05); border-left: 5px solid #22c55e;">
+                <h4 style="margin: 0; color: #22c55e;">🔍 El Discriminador</h4>
+                <p style="margin: 5px 0 0 0; font-size: 1.1rem;">Actúa como un juez. Evalúa si el dato es Real (del dataset) o Sintético (del generador).</p>
+            </div>
+            <p style="font-style: italic; color: #a855f7; margin-top: 10px;">
+                "La calidad final surge de una competencia donde ambos mejoran simultáneamente."
+            </p>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d10.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s11">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #3b82f6; margin-bottom: 1rem;">Generación II: VAEs</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Autoencoders Variacionales: La geometría de la reconstrucción.
+        </p>
+        
+        <div style="display: grid; gap: 15px;">
+            <div style="padding: 15px; border-radius: 10px; background: rgba(59, 130, 246, 0.05); border-left: 5px solid #3b82f6;">
+                <h4 style="margin: 0; color: #3b82f6;">📥 El Encoder</h4>
+                <p style="margin: 5px 0 0 0; font-size: 1.1rem;">Comprime el dato masivo en un vector matemático pequeño llamado <strong>Espacio Latente</strong>.</p>
+            </div>
+            <div style="padding: 15px; border-radius: 10px; background: rgba(59, 130, 246, 0.05); border-left: 5px solid #60a5fa;">
+                <h4 style="margin: 0; color: #60a5fa;">📤 El Decoder</h4>
+                <p style="margin: 5px 0 0 0; font-size: 1.1rem;">Toma una muestra del espacio latente y la reconstruye, creando un dato nuevo y coherente.</p>
+            </div>
+            <p style="color: #9ca3af; font-size: 1.2rem; margin-top: 10px;">
+                A diferencia de las GANs, los VAEs son excelentes para <strong>interpolaciones suaves</strong> (cambios graduales).
+            </p>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d11.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s12">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #06b6d4; margin-bottom: 1rem;">Generación III: Difusión</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Creación mediante el refinamiento del caos.
+        </p>
+        
+        <div style="display: grid; gap: 15px;">
+            <div style="padding: 15px; border-radius: 10px; background: rgba(6, 182, 212, 0.05); border-left: 5px solid #06b6d4;">
+                <h4 style="margin: 0; color: #06b6d4;">🌪️ Difusión Progresiva</h4>
+                <p style="margin: 5px 0 0 0; font-size: 1.1rem;">Se entrena a la IA para revertir el proceso de destrucción de datos (ruido).</p>
+            </div>
+            <div style="padding: 15px; border-radius: 10px; background: rgba(6, 182, 212, 0.05); border-left: 5px solid #22d3ee;">
+                <h4 style="margin: 0; color: #22d3ee;">✨ Denoising (Limpieza)</h4>
+                <p style="margin: 5px 0 0 0; font-size: 1.1rem;">A partir de una semilla aleatoria, la red "esculpe" el dato eliminando lo que sobra.</p>
+            </div>
+            <p style="color: #9ca3af; font-size: 1.2rem; margin-top: 10px; border: 1px dashed #06b6d4; padding: 10px; border-radius: 8px;">
+                Es la tecnología detrás de las IAs más potentes de 2026.
+            </p>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d12.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s13">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #ffffff; margin-bottom: 1rem;">¿Cuál elegir?</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            La estrategia depende de tus objetivos y recursos.
+        </p>
+        
+        <table style="width: 100%; border-collapse: collapse; font-size: 1.2rem; color: #f1f5f9;">
+            <thead>
+                <tr style="border-bottom: 2px solid var(--accent);">
+                    <th style="padding: 15px; text-align: left; color: var(--accent);">Característica</th>
+                    <th style="padding: 15px; text-align: left; color: var(--accent);">Variación</th>
+                    <th style="padding: 15px; text-align: left; color: #f87171;">Generación</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 15px; font-weight: bold;">Dependencia Real</td>
+                    <td style="padding: 15px;">Total (Mutación)</td>
+                    <td style="padding: 15px;">Mínima (Inspiración)</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 15px; font-weight: bold;">Privacidad</td>
+                    <td style="padding: 15px;">Riesgo bajo</td>
+                    <td style="padding: 15px;">Privacidad total</td>
+                </tr>
+                <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">
+                    <td style="padding: 15px; font-weight: bold;">Cálculo (GPU)</td>
+                    <td style="padding: 15px;">Ligero</td>
+                    <td style="padding: 15px;">Intensivo</td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px; font-weight: bold;">Diversidad</td>
+                    <td style="padding: 15px;">Limitada</td>
+                    <td style="padding: 15px;">Infinita</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d13.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s14">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #a855f7; margin-bottom: 1rem;">Casos de Uso</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Donde el dato sintético se vuelve imprescindible.
+        </p>
+        
+        <div style="display: grid; gap: 15px;">
+            <div style="padding: 15px; border-radius: 10px; background: rgba(168, 85, 247, 0.1); border-left: 5px solid #a855f7;">
+                <h4 style="margin: 0; color: #a855f7;">🩺 Medicina de Precisión</h4>
+                <p style="margin: 5px 0 0 0; font-size: 1.1rem;">Entrenamiento de diagnósticos sin exponer datos sensibles de pacientes reales.</p>
+            </div>
+            <div style="padding: 15px; border-radius: 10px; background: rgba(168, 85, 247, 0.1); border-left: 5px solid #a855f7;">
+                <h4 style="margin: 0; color: #a855f7;">🛡️ Ciberseguridad</h4>
+                <p style="margin: 5px 0 0 0; font-size: 1.1rem;">Simulación de ataques y patrones de fraude imposibles de recolectar masivamente.</p>
+            </div>
+            <div style="padding: 15px; border-radius: 10px; background: rgba(168, 85, 247, 0.1); border-left: 5px solid #a855f7;">
+                <h4 style="margin: 0; color: #a855f7;">🚗 Conducción Autónoma</h4>
+                <p style="margin: 5px 0 0 0; font-size: 1.1rem;">Creación de entornos virtuales críticos para testear sensores en situaciones límite.</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d14.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s15">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #3b82f6; margin-bottom: 1rem;">Caso: American Express</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Entrenando la IA con fraudes que no han ocurrido (aún).
+        </p>
+        
+        <div style="background: rgba(59, 130, 246, 0.1); padding: 25px; border-radius: 15px; border-left: 5px solid #3b82f6;">
+            <p style="font-size: 1.4rem;"><strong>Problema:</strong> El fraude es un evento minoritario en el dataset (Desbalanceo de clases).</p>
+            <p style="font-size: 1.4rem; margin: 15px 0;"><strong>Acción:</strong> Uso de <strong>GANs</strong> para inyectar millones de transacciones fraudulentas sintéticas.</p>
+            <p style="font-size: 1.4rem; color: #3b82f6; font-weight: bold;">Resultado: Incremento del 1000% en la precisión de detección de fraude.</p>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d15.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s16">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #fbbf24; margin-bottom: 1rem;">Caso: Waymo (Google)</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Carcraft: El universo sintético donde la IA aprende a conducir.
+        </p>
+        
+        <div style="background: rgba(251, 191, 36, 0.1); padding: 25px; border-radius: 15px; border-left: 5px solid #fbbf24;">
+            <p style="font-size: 1.4rem;"><strong>El Reto:</strong> Los "Edge Cases" (eventos raros como un peatón en patinete bajo lluvia intensa) son escasos en el mundo real.</p>
+            <p style="font-size: 1.4rem; margin: 15px 0;"><strong>Acción:</strong> Generación de <strong>15.000 millones de kilómetros</strong> en simulaciones 3D con variaciones infinitas de clima y obstáculos.</p>
+            <p style="font-size: 1.4rem; color: #fbbf24; font-weight: bold;">Resultado: Los coches autónomos operan en ciudades complejas gracias a datos que nunca pisaron el asfalto.</p>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d16.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s17">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #a855f7; margin-bottom: 1rem;">Caso: Roche (Oncología)</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Acelerando la cura del cáncer mediante "Cohortes Sintéticas".
+        </p>
+        
+        <div style="background: rgba(168, 85, 247, 0.1); padding: 25px; border-radius: 15px; border-left: 5px solid #a855f7;">
+            <p style="font-size: 1.4rem;"><strong>El Reto:</strong> Obtener datos de pacientes reales con cáncer de pulmón es un proceso lento y éticamente complejo.</p>
+            <p style="font-size: 1.4rem; margin: 15px 0;"><strong>Acción:</strong> Creación de una cohorte de control sintética que imita las respuestas biológicas de pacientes reales a la inmunoterapia.</p>
+            <p style="font-size: 1.4rem; color: #a855f7; font-weight: bold;">Resultado: Reducción del 50% en el tiempo de investigación y acceso seguro para investigadores externos.</p>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d17.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s18">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #f472b6; margin-bottom: 1rem;">Herramientas del Sector</h2>
+        <p style="font-size: 1.6rem; color: #9ca3af; margin-bottom: 2rem;">
+            Del código a la producción: El Stack esencial.
+        </p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div style="background: rgba(244, 114, 182, 0.05); padding: 15px; border-radius: 10px; border: 1px solid #f472b6;">
+                <h4 style="color: #f472b6; margin: 0 0 10px 0;">🛠️ Variación (Augmentation)</h4>
+                <ul style="font-size: 1.1rem; padding-left: 20px;">
+                    <li><strong>Albumentations:</strong> Rendimiento extremo.</li>
+                    <li><strong>Keras/PyTorch:</strong> Capas integradas.</li>
+                    <li><strong>Imgaug:</strong> Efectos avanzados.</li>
+                </ul>
+            </div>
+            <div style="background: rgba(244, 114, 182, 0.05); padding: 15px; border-radius: 10px; border: 1px solid #f472b6;">
+                <h4 style="color: #f472b6; margin: 0 0 10px 0;">🧠 Generación (Synthetic)</h4>
+                <ul style="font-size: 1.1rem; padding-left: 20px;">
+                    <li><strong>SDV:</strong> Modelos estadísticos y GANs.</li>
+                    <li><strong>Gretel.ai:</strong> Privacidad y escalabilidad.</li>
+                    <li><strong>YData:</strong> Perfilado y calidad de datos.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d18.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s19">
+    <div class="info">
+        <h2 style="font-size: 3.5rem; color: #fbbf24; margin-bottom: 1rem;">El Futuro es Sintético</h2>
+        <p style="font-size: 1.8rem; color: #ffffff; margin-bottom: 2rem; font-style: italic;">
+            "La realidad ya no es el límite, es solo la semilla."
+        </p>
+        
+        <div style="display: grid; gap: 20px;">
+            <div style="border-left: 5px solid #fbbf24; padding-left: 20px;">
+                <h4 style="font-size: 1.5rem; margin: 0;">Soberanía Digital</h4>
+                <p style="color: #9ca3af;">Independencia total de la recolección física de datos.</p>
+            </div>
+            <div style="border-left: 5px solid #fbbf24; padding-left: 20px;">
+                <h4 style="font-size: 1.5rem; margin: 0;">Ética por Diseño</h4>
+                <p style="color: #9ca3af;">Privacidad absoluta garantizada por la propia naturaleza del dato.</p>
+            </div>
+            <div style="border-left: 5px solid #fbbf24; padding-left: 20px;">
+                <h4 style="font-size: 1.5rem; margin: 0;">Evolución Exponencial</h4>
+                <p style="color: #9ca3af;">Modelos que generan su propio combustible para seguir aprendiendo.</p>
+            </div>
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 1.2rem; color: #fbbf24; font-weight: bold; letter-spacing: 2px;">
+            GRACIAS POR SU ATENCIÓN
+        </p>
+    </div>
+    
+    <div class="visual-side"> <img src="assets/d19.png" alt=""> </div>
+    </div>
+
+    <div class="slide" id="s20">
+    <div class="info">
+        <h1 style="font-size: 6rem; color: var(--accent);">¿Preguntas?</h1>
+    </div>
+    <div class="visual-side"> <img src="assets/d20.png" alt=""> </div>
+    </div>
+
+    
+</div>
+
+<div class="controls">
+    <a href="../../index.html" class="home-btn" title="Volver al Menú"><i class="fa-solid fa-house"></i></a>
+    <button class="nav-btn" onclick="changeSlide(-1)">← ANTERIOR</button>
+    <div id="counter">1 / 20</div>
+    <button class="nav-btn" onclick="changeSlide(1)">SIGUIENTE →</button>
+</div>
+
+<script>
+    let current = 1;
+    const total = 20;
+
+    function changeSlide(dir) {
+        document.getElementById(`s${current}`).classList.remove('active');
+        
+        current += dir;
+
+        // Bucle Infinito
+        if (current > total) current = 1;
+        if (current < 1) current = total;
+
+        document.getElementById(`s${current}`).classList.add('active');
+        document.getElementById('counter').innerText = `${current} / ${total}`;
+    }
+
+    // Control por teclado
+    document.addEventListener('keydown', (e) => {
+        if (e.key === "ArrowRight" || e.key === " ") changeSlide(1);
+        if (e.key === "ArrowLeft") changeSlide(-1);
+    });
+</script>
+
+</body>
+</html>
