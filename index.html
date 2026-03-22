@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raúl Gómez Téllez | Charlas & Slides</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -18,7 +20,9 @@
             --border: #1e293b;
         }
 
-        * { box-sizing: border-box; }
+        * {
+            box-sizing: border-box;
+        }
 
         body {
             background-color: var(--bg);
@@ -30,7 +34,8 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            overflow-x: hidden; /* Evita scroll horizontal */
+            overflow-x: hidden;
+            /* Evita scroll horizontal */
         }
 
         header {
@@ -44,7 +49,7 @@
         h1 {
             font-family: 'Outfit', sans-serif;
             /* Tamaño fluido: mínimo 2rem, máximo 3.5rem */
-            font-size: clamp(2rem, 8vw, 3.5rem); 
+            font-size: clamp(2rem, 8vw, 3.5rem);
             margin-bottom: 15px;
             background: linear-gradient(to right, var(--accent), var(--accent-orange));
             -webkit-background-clip: text;
@@ -81,7 +86,8 @@
             flex-direction: column;
             position: relative;
             overflow: hidden;
-            height: 100%; /* Para que todas midan lo mismo en la misma fila */
+            height: 100%;
+            /* Para que todas midan lo mismo en la misma fila */
         }
 
         .presentation-card:hover {
@@ -119,7 +125,8 @@
 
         .tag-row {
             display: flex;
-            flex-wrap: wrap; /* Para que las etiquetas bajen si no caben */
+            flex-wrap: wrap;
+            /* Para que las etiquetas bajen si no caben */
             gap: 8px;
         }
 
@@ -155,15 +162,23 @@
             transition: 0.3s;
         }
 
-        .social-links a:hover { color: var(--accent); }
+        .social-links a:hover {
+            color: var(--accent);
+        }
 
         /* Ajustes para móviles muy pequeños */
         @media (max-width: 400px) {
-            .container { grid-template-columns: 1fr; }
-            .presentation-card { padding: 20px; }
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .presentation-card {
+                padding: 20px;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <header>
@@ -172,11 +187,12 @@
     </header>
 
     <div class="container">
-        
+
         <a href="presentaciones/sesión1/sesión1.html" class="presentation-card">
             <span class="date">FEBRERO 2026</span>
             <h2>Machine Learning: Sesión Completa</h2>
-            <p>De los fundamentos de la IA al ajuste de hiperparámetros. Una guía técnica visual sobre algoritmos clásicos y optimización.</p>
+            <p>De los fundamentos de la IA al ajuste de hiperparámetros. Una guía técnica visual sobre algoritmos
+                clásicos y optimización.</p>
             <div class="tag-row">
                 <span class="tag">AI/ML</span>
                 <span class="tag">Data Science</span>
@@ -185,9 +201,10 @@
         </a>
 
         <a href="presentaciones/sesión2/sesión2.html" class="presentation-card"">
-            <span class="date">FEBRERO 2026</span>
+            <span class=" date">FEBRERO 2026</span>
             <h2>Clustering, Árboles, Bagging y Boosting</h2>
-            <p>Explorando modelos avanzados de ensamble y técnicas de aprendizaje no supervisado para grandes volúmenes de datos.</p>
+            <p>Explorando modelos avanzados de ensamble y técnicas de aprendizaje no supervisado para grandes volúmenes
+                de datos.</p>
             <div class="tag-row">
                 <span class="tag">ML</span>
                 <span class="tag">Ensemble</span>
@@ -196,7 +213,7 @@
         </a>
 
         <a href="presentaciones/Ponencias/ponencia_augment.html" class="presentation-card"">
-            <span class="date">FEBRERO 2026</span>
+            <span class=" date">FEBRERO 2026</span>
             <h2>Aumentación de datos</h2>
             <p>Como los datos nutren a los algoritmos y como obtener más</p>
             <div class="tag-row">
@@ -206,10 +223,10 @@
             </div>
         </a>
 
-        <a href="#" class="presentation-card" style="opacity: 0.7; cursor: default;" onclick="return false;">
-            <span class="date">PRÓXIMAMENTE</span>
+        <a href="presentaciones/sesión3/sesión3.html" class="presentation-card"">
+            <span class=" date">MARZO 2026</span>
             <h2>Deep Learning & Redes Neuronales</h2>
-            <p>Arquitecturas complejas, capas convolucionales y el estado del arte en IA Generativa y visión artificial.</p>
+            <p>Introducción al deep learning por medio de pytorch</p>
             <div class="tag-row">
                 <span class="tag">Deep Learning</span>
                 <span class="tag">CNN</span>
@@ -228,4 +245,5 @@
     </footer>
 
 </body>
+
 </html>
