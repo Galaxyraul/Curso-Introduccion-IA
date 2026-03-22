@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ingeniería de ML - Sesión 2</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Inter:wght@300;400;500&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
@@ -22,7 +25,11 @@
             --border: #1e293b;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             background-color: #020617;
@@ -57,22 +64,36 @@
             border: 1px solid var(--border);
         }
 
-        .slide-container.active { display: flex; }
+        .slide-container.active {
+            display: flex;
+        }
 
         .slide-container::before {
             content: '';
             position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: 
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
                 radial-gradient(circle at 0% 0%, rgba(34, 211, 238, 0.05) 0%, transparent 40%),
                 radial-gradient(circle at 100% 100%, rgba(249, 115, 22, 0.05) 0%, transparent 40%);
             z-index: 0;
         }
 
-        .slide-container > * { position: relative; z-index: 1; }
+        .slide-container>* {
+            position: relative;
+            z-index: 1;
+        }
 
-        h1, h2, h3, h4 { font-family: 'Outfit', sans-serif; font-weight: 700; }
-        
+        h1,
+        h2,
+        h3,
+        h4 {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+        }
+
         .slide-title {
             font-size: 38px;
             margin-bottom: 30px;
@@ -83,35 +104,93 @@
             letter-spacing: 1px;
         }
 
-        p, li { font-size: 18px; line-height: 1.6; color: var(--text-secondary); }
-        strong { color: var(--accent-cyan); }
+        p,
+        li {
+            font-size: 18px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
 
-        .content-area { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; }
+        strong {
+            color: var(--accent-cyan);
+        }
+
+        .content-area {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+        }
 
         /* Title Slide */
-        .title-layout { text-align: center; justify-content: center; height: 100%; }
-        .title-layout h1 { font-size: 68px; color: var(--accent-cyan); margin-bottom: 15px; line-height: 1.1; }
+        .title-layout {
+            text-align: center;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .title-layout h1 {
+            font-size: 68px;
+            color: var(--accent-cyan);
+            margin-bottom: 15px;
+            line-height: 1.1;
+        }
 
         /* Section Divider Layout */
-        .divider-layout { text-align: left; justify-content: center; height: 100%; }
-        .divider-layout .block-num { font-size: 24px; color: var(--accent-orange); letter-spacing: 4px; font-weight: 700; margin-bottom: 10px; }
-        .divider-layout h2 { font-size: 80px; line-height: 1; margin-bottom: 30px; color: var(--text-primary); }
-        .divider-layout hr { width: 100px; border: none; height: 4px; background: var(--accent-cyan); margin-bottom: 30px; }
-        .divider-layout .topics { font-size: 22px; color: var(--text-secondary); max-width: 600px; }
+        .divider-layout {
+            text-align: left;
+            justify-content: center;
+            height: 100%;
+        }
+
+        .divider-layout .block-num {
+            font-size: 24px;
+            color: var(--accent-orange);
+            letter-spacing: 4px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .divider-layout h2 {
+            font-size: 80px;
+            line-height: 1;
+            margin-bottom: 30px;
+            color: var(--text-primary);
+        }
+
+        .divider-layout hr {
+            width: 100px;
+            border: none;
+            height: 4px;
+            background: var(--accent-cyan);
+            margin-bottom: 30px;
+        }
+
+        .divider-layout .topics {
+            font-size: 22px;
+            color: var(--text-secondary);
+            max-width: 600px;
+        }
 
         /* Visual Index */
-        .index-list { list-style: none; counter-reset: index-counter; }
-        .index-list li { 
-            margin-bottom: 15px; 
-            padding: 20px; 
-            background: var(--bg-card); 
+        .index-list {
+            list-style: none;
+            counter-reset: index-counter;
+        }
+
+        .index-list li {
+            margin-bottom: 15px;
+            padding: 20px;
+            background: var(--bg-card);
             border: 1px solid var(--border);
             border-radius: 8px;
             display: flex;
             align-items: center;
             cursor: default;
         }
-        .index-list li::before { 
+
+        .index-list li::before {
             counter-increment: index-counter;
             content: "0" counter(index-counter);
             font-weight: 700;
@@ -123,8 +202,14 @@
         }
 
         /* Layout Helpers */
-        .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; width: 100%; }
-        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            width: 100%;
+        }
+
         /* Grids */
         .taxonomy-grid {
             display: grid;
@@ -143,19 +228,52 @@
             border-top: 4px solid var(--accent-cyan);
         }
 
-        .taxonomy-col.orange { border-top-color: var(--accent-orange); }
-        .taxonomy-col.green { border-top-color: var(--accent-green); }
-        .taxonomy-col.purple { border-top-color: var(--accent-purple); }
-        .taxonomy-col.red { border-top-color: var(--accent-red); }
+        .taxonomy-col.orange {
+            border-top-color: var(--accent-orange);
+        }
 
-        .header-box { display: flex; align-items: center; gap: 12px; margin-bottom: 5px; }
-        .header-box i { font-size: 24px; color: var(--accent-cyan); }
-        .taxonomy-col.orange i { color: var(--accent-orange); }
-        .taxonomy-col.green i { color: var(--accent-green); }
-        .taxonomy-col.purple i { color: var(--accent-purple); }
-        
-        .header-box h3 { font-size: 18px; text-transform: uppercase; letter-spacing: 1px; }
-        
+        .taxonomy-col.green {
+            border-top-color: var(--accent-green);
+        }
+
+        .taxonomy-col.purple {
+            border-top-color: var(--accent-purple);
+        }
+
+        .taxonomy-col.red {
+            border-top-color: var(--accent-red);
+        }
+
+        .header-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 5px;
+        }
+
+        .header-box i {
+            font-size: 24px;
+            color: var(--accent-cyan);
+        }
+
+        .taxonomy-col.orange i {
+            color: var(--accent-orange);
+        }
+
+        .taxonomy-col.green i {
+            color: var(--accent-green);
+        }
+
+        .taxonomy-col.purple i {
+            color: var(--accent-purple);
+        }
+
+        .header-box h3 {
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
         .math-formula {
             background: #020617;
             padding: 10px;
@@ -169,17 +287,21 @@
         }
 
         /* Analogy Box */
-        .analogy-box { 
-            background: rgba(34, 211, 238, 0.05); 
-            border: 1px solid var(--border); 
-            padding: 20px; 
-            border-radius: 12px; 
-            display: flex; 
-            gap: 20px; 
+        .analogy-box {
+            background: rgba(34, 211, 238, 0.05);
+            border: 1px solid var(--border);
+            padding: 20px;
+            border-radius: 12px;
+            display: flex;
+            gap: 20px;
             align-items: flex-start;
             margin-top: 20px;
         }
-        .analogy-box i { font-size: 30px; color: var(--accent-orange); }
+
+        .analogy-box i {
+            font-size: 30px;
+            color: var(--accent-orange);
+        }
 
         /* Navigation Controls */
         .controls {
@@ -195,7 +317,7 @@
             border: 1px solid var(--border);
             z-index: 1000;
         }
-        
+
         .nav-btn {
             background: transparent;
             border: none;
@@ -208,18 +330,35 @@
             gap: 10px;
             transition: color 0.3s;
         }
-        .nav-btn:hover { color: var(--accent-cyan); }
-        .home-btn { color: var(--text-secondary); text-decoration: none; font-size: 18px; }
-        .home-btn:hover { color: var(--accent-cyan); }
+
+        .nav-btn:hover {
+            color: var(--accent-cyan);
+        }
+
+        .home-btn {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .home-btn:hover {
+            color: var(--accent-cyan);
+        }
 
         /* Custom for Tree Viz */
         .tree-node {
-            background: var(--bg-card); border: 1px solid var(--accent-cyan);
-            padding: 10px 20px; border-radius: 20px; text-align: center; font-size: 14px;
-            width: fit-content; margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--accent-cyan);
+            padding: 10px 20px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 14px;
+            width: fit-content;
+            margin: 0 auto;
         }
     </style>
 </head>
+
 <body>
 
     <div class="slide-wrapper">
@@ -228,7 +367,9 @@
             <div class="content-area title-layout">
                 <h1>Árboles y Ensembles</h1>
                 <p class="subtitle">Sesión 2: De la decisión individual a la sabiduría de las masas</p>
-                <div style="margin-top: 50px; height: 2px; width: 100px; background: var(--accent-orange); margin-left: auto; margin-right: auto;"></div>
+                <div
+                    style="margin-top: 50px; height: 2px; width: 100px; background: var(--accent-orange); margin-left: auto; margin-right: auto;">
+                </div>
                 <p style="margin-top: 20px; color: var(--accent-cyan); font-weight: 600;">JAÉN TECH 2026</p>
             </div>
         </div>
@@ -237,11 +378,14 @@
             <h2 class="slide-title">Contenido Sesión 2</h2>
             <div class="content-area">
                 <ul class="index-list">
-                    <li><span><strong>Árboles de Decisión:</strong> La lógica no lineal, Gini y poda (pruning).</span></li>
+                    <li><span><strong>Árboles de Decisión:</strong> La lógica no lineal, Gini y poda (pruning).</span>
+                    </li>
                     <li><span><strong>Ensembles (SOTA):</strong> La revolución de Random Forest y XGBoost.</span></li>
-                    <li><span><strong>Clustering:</strong> Descubriendo patrones ocultos con K-Means y DBSCAN.</span></li>
+                    <li><span><strong>Clustering:</strong> Descubriendo patrones ocultos con K-Means y DBSCAN.</span>
+                    </li>
                     <li><span><strong>Ingeniería de Producción:</strong> Pipelines robustos y serialización.</span></li>
-                    <li><span><strong>Optimización:</strong> Grid Search vs Random Search para hiperparámetros.</span></li>
+                    <li><span><strong>Optimización:</strong> Grid Search vs Random Search para hiperparámetros.</span>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -260,28 +404,43 @@
             <div class="content-area">
                 <div class="taxonomy-grid">
                     <div class="taxonomy-col">
-                        <div class="header-box"><i class="fa-solid fa-sitemap"></i><h3>Nodo Raíz</h3></div>
-                        <p style="font-size: 14px;">El inicio. Contiene el 100% de los datos. Busca la <strong>mejor pregunta</strong> para dividir la población.</p>
+                        <div class="header-box"><i class="fa-solid fa-sitemap"></i>
+                            <h3>Nodo Raíz</h3>
+                        </div>
+                        <p style="font-size: 14px;">El inicio. Contiene el 100% de los datos. Busca la <strong>mejor
+                                pregunta</strong> para dividir la población.</p>
                     </div>
                     <div class="taxonomy-col orange">
-                        <div class="header-box"><i class="fa-solid fa-code-branch"></i><h3>Nodo Decisión</h3></div>
-                        <p style="font-size: 14px;">Puntos intermedios. Evalúan una característica (Ej: <em>¿Edad > 30?</em>) para bifurcar el camino.</p>
+                        <div class="header-box"><i class="fa-solid fa-code-branch"></i>
+                            <h3>Nodo Decisión</h3>
+                        </div>
+                        <p style="font-size: 14px;">Puntos intermedios. Evalúan una característica (Ej: <em>¿Edad >
+                                30?</em>) para bifurcar el camino.</p>
                     </div>
                     <div class="taxonomy-col green">
-                        <div class="header-box"><i class="fa-solid fa-leaf"></i><h3>Hoja (Leaf)</h3></div>
-                        <p style="font-size: 14px;">Punto final. No se divide más. Contiene la predicción final (Promedio o Moda).</p>
+                        <div class="header-box"><i class="fa-solid fa-leaf"></i>
+                            <h3>Hoja (Leaf)</h3>
+                        </div>
+                        <p style="font-size: 14px;">Punto final. No se divide más. Contiene la predicción final
+                            (Promedio o Moda).</p>
                     </div>
                 </div>
 
                 <div class="two-column" style="margin-top: 30px;">
                     <div class="taxonomy-col purple">
-                        <div class="header-box"><i class="fa-solid fa-filter"></i><h3>Impureza de Gini</h3></div>
+                        <div class="header-box"><i class="fa-solid fa-filter"></i>
+                            <h3>Impureza de Gini</h3>
+                        </div>
                         <div class="math-formula">Gini = 1 - Σ (p_i)²</div>
-                        <p style="font-size: 14px;">El algoritmo busca reducir la "suciedad" del nodo. Gini=0 significa pureza total (todos son de la misma clase).</p>
+                        <p style="font-size: 14px;">El algoritmo busca reducir la "suciedad" del nodo. Gini=0 significa
+                            pureza total (todos son de la misma clase).</p>
                     </div>
                     <div class="taxonomy-col red">
-                        <div class="header-box"><i class="fa-solid fa-scissors"></i><h3>El Peligro: Overfitting</h3></div>
-                        <p style="font-size: 14px;">Los árboles son camaleones. Si no los limitas, memorizarán cada dato. <br><strong>Solución:</strong> Poda (Pruning) con <code>max_depth</code>.</p>
+                        <div class="header-box"><i class="fa-solid fa-scissors"></i>
+                            <h3>El Peligro: Overfitting</h3>
+                        </div>
+                        <p style="font-size: 14px;">Los árboles son camaleones. Si no los limitas, memorizarán cada
+                            dato. <br><strong>Solución:</strong> Poda (Pruning) con <code>max_depth</code>.</p>
                     </div>
                 </div>
             </div>
@@ -292,7 +451,8 @@
                 <div class="block-num">BLOQUE 07</div>
                 <h2>Ensembles</h2>
                 <hr>
-                <p class="topics">La sabiduría de las masas: Bagging, Boosting y el estado del arte en datos tabulares.</p>
+                <p class="topics">La sabiduría de las masas: Bagging, Boosting y el estado del arte en datos tabulares.
+                </p>
             </div>
         </div>
 
@@ -301,20 +461,27 @@
             <div class="content-area">
                 <div class="two-column">
                     <div class="taxonomy-col">
-                        <div class="header-box"><i class="fa-solid fa-layer-group"></i><h3>Bagging (Paralelo)</h3></div>
+                        <div class="header-box"><i class="fa-solid fa-layer-group"></i>
+                            <h3>Bagging (Paralelo)</h3>
+                        </div>
                         <div class="math-formula">Reduce Varianza</div>
-                        <p>Entrena muchos árboles independientes a la vez, cada uno con una visión parcial de los datos.</p>
+                        <p>Entrena muchos árboles independientes a la vez, cada uno con una visión parcial de los datos.
+                        </p>
                         <div style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 10px;">
-                            <strong>Random Forest:</strong> Democracia. "Si 100 expertos votan, el error individual se cancela".
+                            <strong>Random Forest:</strong> Democracia. "Si 100 expertos votan, el error individual se
+                            cancela".
                         </div>
                     </div>
 
                     <div class="taxonomy-col orange">
-                        <div class="header-box"><i class="fa-solid fa-rocket"></i><h3>Boosting (Secuencial)</h3></div>
+                        <div class="header-box"><i class="fa-solid fa-rocket"></i>
+                            <h3>Boosting (Secuencial)</h3>
+                        </div>
                         <div class="math-formula">Reduce Bias</div>
                         <p>Entrena árboles en cadena. Cada árbol intenta corregir los errores del anterior.</p>
                         <div style="margin-top: 15px; border-top: 1px solid var(--border); padding-top: 10px;">
-                            <strong>XGBoost / LightGBM:</strong> Mejora continua. Se enfoca obsesivamente en los casos difíciles.
+                            <strong>XGBoost / LightGBM:</strong> Mejora continua. Se enfoca obsesivamente en los casos
+                            difíciles.
                         </div>
                     </div>
                 </div>
@@ -325,7 +492,8 @@
                         <p><strong>Analogía:</strong></p>
                         <p style="font-size: 14px; margin-top: 5px;">
                             <strong>Bagging:</strong> Un consejo de sabios debatiendo. <br>
-                            <strong>Boosting:</strong> Un estudiante repasando una y otra vez solo las preguntas que falló en el examen anterior.
+                            <strong>Boosting:</strong> Un estudiante repasando una y otra vez solo las preguntas que
+                            falló en el examen anterior.
                         </p>
                     </div>
                 </div>
@@ -346,7 +514,9 @@
             <div class="content-area">
                 <div class="taxonomy-grid">
                     <div class="taxonomy-col">
-                        <div class="header-box"><i class="fa-solid fa-circle-nodes"></i><h3>K-Means</h3></div>
+                        <div class="header-box"><i class="fa-solid fa-circle-nodes"></i>
+                            <h3>K-Means</h3>
+                        </div>
                         <div class="math-formula">Minimiza Inercia</div>
                         <ul style="padding-left: 20px; font-size: 14px;">
                             <li>Necesitas decirle <strong>K</strong> (nº grupos).</li>
@@ -354,9 +524,11 @@
                             <li>Muy rápido, pero sensible a outliers.</li>
                         </ul>
                     </div>
-                    
+
                     <div class="taxonomy-col purple">
-                        <div class="header-box"><i class="fa-solid fa-shapes"></i><h3>DBSCAN</h3></div>
+                        <div class="header-box"><i class="fa-solid fa-shapes"></i>
+                            <h3>DBSCAN</h3>
+                        </div>
                         <div class="math-formula">Densidad Conexa</div>
                         <ul style="padding-left: 20px; font-size: 14px;">
                             <li>No necesita K.</li>
@@ -365,7 +537,7 @@
                         </ul>
                     </div>
                 </div>
-                 <p style="margin-top: 30px; font-style: italic; text-align: center; color: var(--accent-orange);">
+                <p style="margin-top: 30px; font-style: italic; text-align: center; color: var(--accent-orange);">
                     "K-Means corta el pastel con cuchillo recto. DBSCAN sigue la forma del chocolate."
                 </p>
             </div>
@@ -385,18 +557,24 @@
             <div class="content-area">
                 <div class="taxonomy-grid" style="grid-template-columns: 1fr;">
                     <div class="taxonomy-col green">
-                        <div class="header-box"><i class="fa-solid fa-timeline"></i><h3>Flujo de Datos Unificado</h3></div>
-                        <p style="text-align: center; font-family: monospace; font-size: 16px; margin: 20px 0; color: var(--text-primary);">
-                            Raw Data &rarr; [ Imputer ] &rarr; [ Scaler ] &rarr; [ Encoder ] &rarr; [ Model ] &rarr; Predicción
+                        <div class="header-box"><i class="fa-solid fa-timeline"></i>
+                            <h3>Flujo de Datos Unificado</h3>
+                        </div>
+                        <p
+                            style="text-align: center; font-family: monospace; font-size: 16px; margin: 20px 0; color: var(--text-primary);">
+                            Raw Data &rarr; [ Imputer ] &rarr; [ Scaler ] &rarr; [ Encoder ] &rarr; [ Model ] &rarr;
+                            Predicción
                         </p>
                         <div class="two-column">
                             <div>
                                 <h4 style="color: var(--accent-green); margin-bottom: 5px;">Prevención de Fugas</h4>
-                                <p style="font-size: 14px;">El Pipeline asegura que el <code>fit()</code> del escalador solo vea el Train Set, incluso dentro de la Cross-Validation.</p>
+                                <p style="font-size: 14px;">El Pipeline asegura que el <code>fit()</code> del escalador
+                                    solo vea el Train Set, incluso dentro de la Cross-Validation.</p>
                             </div>
                             <div>
                                 <h4 style="color: var(--accent-green); margin-bottom: 5px;">Producción</h4>
-                                <p style="font-size: 14px;">Serializas un solo objeto (<code>.pkl</code>). Al llegar datos nuevos, el pipeline aplica las mismas transformaciones exactas.</p>
+                                <p style="font-size: 14px;">Serializas un solo objeto (<code>.pkl</code>). Al llegar
+                                    datos nuevos, el pipeline aplica las mismas transformaciones exactas.</p>
                             </div>
                         </div>
                     </div>
@@ -409,21 +587,28 @@
             <div class="content-area">
                 <div class="two-column">
                     <div class="taxonomy-col">
-                        <div class="header-box"><i class="fa-solid fa-border-all"></i><h3>Grid Search</h3></div>
-                        <p style="font-size: 14px;">Fuerza bruta. Prueba TODAS las combinaciones de una rejilla definida.</p>
+                        <div class="header-box"><i class="fa-solid fa-border-all"></i>
+                            <h3>Grid Search</h3>
+                        </div>
+                        <p style="font-size: 14px;">Fuerza bruta. Prueba TODAS las combinaciones de una rejilla
+                            definida.</p>
                         <div class="math-formula" style="margin-top: 10px;">Coste Exponencial</div>
                     </div>
-                    
+
                     <div class="taxonomy-col orange">
-                        <div class="header-box"><i class="fa-solid fa-shuffle"></i><h3>Random Search</h3></div>
-                        <p style="font-size: 14px;">Prueba combinaciones al azar. Estadísticamente más eficiente para encontrar el óptimo.</p>
+                        <div class="header-box"><i class="fa-solid fa-shuffle"></i>
+                            <h3>Random Search</h3>
+                        </div>
+                        <p style="font-size: 14px;">Prueba combinaciones al azar. Estadísticamente más eficiente para
+                            encontrar el óptimo.</p>
                         <div class="math-formula" style="margin-top: 10px;">Coste Controlado</div>
                     </div>
                 </div>
                 <div class="analogy-box">
                     <i class="fa-solid fa-magnifying-glass-chart"></i>
                     <p style="font-size: 14px;">
-                        <strong>Bayesian Optimization:</strong> La forma "Smart". Aprende de las pruebas anteriores para saber dónde buscar después (como el juego de "frío o caliente").
+                        <strong>Bayesian Optimization:</strong> La forma "Smart". Aprende de las pruebas anteriores para
+                        saber dónde buscar después (como el juego de "frío o caliente").
                     </p>
                 </div>
             </div>
@@ -434,22 +619,32 @@
             <div class="content-area">
                 <div class="taxonomy-grid">
                     <div class="taxonomy-col red">
-                        <div class="header-box"><i class="fa-solid fa-scale-unbalanced"></i><h3>El Problema</h3></div>
-                        <p style="font-size: 14px;">99% Sanos vs 1% Enfermos. El modelo optimiza Accuracy diciendo siempre "Sano".</p>
+                        <div class="header-box"><i class="fa-solid fa-scale-unbalanced"></i>
+                            <h3>El Problema</h3>
+                        </div>
+                        <p style="font-size: 14px;">99% Sanos vs 1% Enfermos. El modelo optimiza Accuracy diciendo
+                            siempre "Sano".</p>
                     </div>
                     <div class="taxonomy-col purple">
-                        <div class="header-box"><i class="fa-solid fa-clone"></i><h3>SMOTE (Sampling)</h3></div>
-                        <p style="font-size: 14px;">Crea datos sintéticos ("falsos positivos plausibles") interpolando entre vecinos.</p>
+                        <div class="header-box"><i class="fa-solid fa-clone"></i>
+                            <h3>SMOTE (Sampling)</h3>
+                        </div>
+                        <p style="font-size: 14px;">Crea datos sintéticos ("falsos positivos plausibles") interpolando
+                            entre vecinos.</p>
                     </div>
                     <div class="taxonomy-col green">
-                        <div class="header-box"><i class="fa-solid fa-weight-hanging"></i><h3>Class Weights</h3></div>
-                        <p style="font-size: 14px;">La solución elegante. Castiga x99 veces más el error en la clase minoritaria.</p>
+                        <div class="header-box"><i class="fa-solid fa-weight-hanging"></i>
+                            <h3>Class Weights</h3>
+                        </div>
+                        <p style="font-size: 14px;">La solución elegante. Castiga x99 veces más el error en la clase
+                            minoritaria.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-    </div> <div class="controls">
+    </div>
+    <div class="controls">
         <a href="../../index.html" class="home-btn" title="Volver al Menú"><i class="fa-solid fa-house"></i></a>
         <button class="nav-btn" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i> Anterior</button>
         <span id="slide-info" style="font-weight: 600; font-family: 'Outfit';">1 / 12</span>
@@ -480,4 +675,5 @@
         updateSlide();
     </script>
 </body>
+
 </html>
